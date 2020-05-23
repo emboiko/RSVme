@@ -1,19 +1,17 @@
 const express = require("express");
 const helmet = require("helmet");
-const rsvpRouter = require("./routes/router");
+const rsvpRouter = require("./routes/rsvpRouter");
+const frontRouter = require("./routes/frontRouter");
 require("./db/mongoose");
 
 const app = express();
 
 app.use(helmet());
 app.use(express.json());
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 app.use(rsvpRouter);
-
-app.get("/", (req, res) => {
-    res.json({
-        "RSVme": "E.Boiko & R.Johnson"
-    });
-});
+app.use(frontRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
