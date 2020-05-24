@@ -9,8 +9,8 @@
 Todo:
 
 - Delete RSVP after expiration
-- Clean up status codes
-- Auth
+- Clean up status codes https://httpstatuses.com/
+- Auth/users/associations
 - Sanitize Date/Time/Phone/Location
 - Geocode location
-- Prettier emails
+- Prettier emails / register / delete account

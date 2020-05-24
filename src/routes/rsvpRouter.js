@@ -6,9 +6,13 @@ const acceptEmail = require("../email/acceptEmail");
 
 const rsvpRouter = new express.Router();
 
+rsvpRouter.get("/", (req, res) => {
+    res.redirect(`http://127.0.0.1:1337`);
+});
+
 rsvpRouter.post("/rsvp", async (req, res) => {
     const id = new mongoose.Types.ObjectId();
-    const qr = await QRcode.toDataURL(`localhost:3000/rsvp/${id}`);
+    const qr = await QRcode.toDataURL(`localhost:3000/rsvp/${id}`); //todo
 
     const rsvp = new RSVP({
         ...req.body,
@@ -34,6 +38,7 @@ rsvpRouter.get("/rsvp/:id", async (req, res) => {
     }
 });
 
+//Protected
 rsvpRouter.patch("/rsvp/:id", async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = [
@@ -64,6 +69,7 @@ rsvpRouter.patch("/rsvp/:id", async (req, res) => {
 
 });
 
+//Protected
 rsvpRouter.delete("/rsvp/:id", async (req, res) => {
     try {
         const rsvp = await RSVP.findOneAndDelete({ id: req.params.id });
@@ -114,17 +120,5 @@ rsvpRouter.post("/rsvp/:id", async (req, res) => {
         res.status(400).send();
     }
 });
-
-rsvpRouter.get("/rsvp/:id/qr", async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id });
-        if (!rsvp) return res.status(404).send();
-
-        res.render("qr", { qr: rsvp.qr });
-    } catch (err) {
-        res.status(400).send();
-    }
-});
-
 
 module.exports = rsvpRouter;
