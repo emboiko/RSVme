@@ -30,4 +30,22 @@ const acceptEmail = (
     });
 }
 
-module.exports = acceptEmail;
+const welcomeEmail = (email, name) => {
+    sgMail.send({
+        to: email,
+        from: "admin@RSVme.com",
+        subject: "Welcome to RSVme",
+        text: `Thanks for joining, ${name}. Your account has been successfully created.`
+    });
+}
+
+const cancelEmail = (email, name) => {
+    sgMail.send({
+        to: email,
+        from: "admin@RSVme.com",
+        subject: `Sorry to see you go, ${name}`,
+        text: "Your account has been successfully deleted. We hope to see you back sometime soon."
+    });
+}
+
+module.exports = {welcomeEmail, cancelEmail, acceptEmail};

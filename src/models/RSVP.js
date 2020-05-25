@@ -48,6 +48,11 @@ const RSVP_Schema = new mongoose.Schema({
         type: String,
         required: true
     },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
     num_guests: {
         type: Number,
         default: 0

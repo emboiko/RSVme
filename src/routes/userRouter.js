@@ -1,10 +1,11 @@
 const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
+const multer = require("multer");
+const sharp = require("sharp");
+const {welcomeEmail, cancelEmail} = require("../email/email");
 
-//multer
-//sharp
-//emails
+const userRouter = new express.Router();
 
 const upload = multer({
     limits: {
@@ -12,36 +13,25 @@ const upload = multer({
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/.(jpg|jpeg|png)$/)) {
-            cb(new Error("Please upload an image"));
+            cb(new Error("Please upload an image (jpg/png)"));
         }
 
         cb(undefined, true);
     }
 });
 
-router.post("/users", async (req, res) => {
-    const user = new User(req.body);
-    try {
-        await user.save();
-        welcomeEmail(user.email, user.name);
-        const token = await user.generateAuthToken();
-        res.status(201).send({ user, token });
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
-
-router.post("/users/login", async (req, res) => {
+userRouter.post("/users/login", async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-        res.send({ user, token });
+        res.status(201).send({ user, token });
     } catch (err) {
-        res.status(400).send();
+        console.log(err);
+        res.status(400).send({ "Error" : err.message });
     }
 });
 
-router.post("/users/logout", auth, async (req, res) => {
+userRouter.post("/users/logout", auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token;
@@ -54,7 +44,7 @@ router.post("/users/logout", auth, async (req, res) => {
     }
 });
 
-router.post("/users/logoutAll", auth, async (req, res) => {
+userRouter.post("/users/logoutAll", auth, async (req, res) => {
     try {
         req.user.tokens = [];
         await req.user.save();
@@ -64,26 +54,23 @@ router.post("/users/logoutAll", auth, async (req, res) => {
     }
 });
 
-router.get("/users/me", auth, async (req, res) => {
+userRouter.post("/users", async (req, res) => {
+    const user = new User(req.body);
+    try {
+        await user.save();
+        // welcomeEmail(user.email, user.name);
+        const token = await user.generateAuthToken();
+        res.status(201).send({ user, token });
+    } catch (err) {
+        res.status(400).send(err);
+    }
+});
+
+userRouter.get("/users/me", auth, async (req, res) => {
     res.send(req.user);
 });
 
-//////////
-
-router.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
-    const buffer = await sharp(req.file.buffer)
-        .resize({ width: 250, height: 250 })
-        .png()
-        .toBuffer();
-
-    req.user.avatar = buffer;
-    await req.user.save();
-    res.send();
-}, (err, req, res, next) => {
-    res.status(400).send({ error: err.message });
-});
-
-router.patch("/users/me", auth, async (req, res) => {
+userRouter.patch("/users/me", auth, async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = ["name", "email", "password", "age"];
     const valid = updates.every((update) => allowedUpdates.includes(update));
@@ -99,37 +86,45 @@ router.patch("/users/me", auth, async (req, res) => {
     }
 });
 
-router.delete("/users/me", auth, async (req, res) => {
+userRouter.delete("/users/me", auth, async (req, res) => {
     try {
         await req.user.remove();
-        cancelEmail(req.user.email, req.user.name);
-        res.send(req.user);
+        // cancelEmail(req.user.email, req.user.name);
+        res.status(200).send();
     } catch (err) {
         res.status(500).send();
     }
 });
 
-router.delete("/users/me/avatar", auth, async (req, res) => {
-    req.user.avatar = undefined;
+userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
+    const buffer = await sharp(req.file.buffer)
+        .resize({ width: 250, height: 250 })
+        .png()
+        .toBuffer();
+
+    req.user.avatar = buffer;
     await req.user.save();
     res.send();
+}, (err, req, res, next) => {
+    res.status(400).send({ error: err.message });
 });
 
-router.get("/users/:id/avatar", async (req, res) => {
+userRouter.get("/users/:id/avatar", async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user || !user.avatar) throw new Error();
 
         res.set("Content-Type", "image/png");
-        res.send(user.avatar);
+        res.status(200).send(user.avatar);
     } catch (err) {
         res.status(404).send();
     }
 });
 
-
-const userRouter = new express.Router();
-
-
+userRouter.delete("/users/me/avatar", auth, async (req, res) => {
+    req.user.avatar = undefined;
+    await req.user.save();
+    res.status(200).send();
+});
 
 module.exports = userRouter;

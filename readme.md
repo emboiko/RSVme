@@ -10,8 +10,7 @@ Todo:
 
 - Delete RSVP after expiration
 - Clean up status codes https://httpstatuses.com/
-- Auth/users/associations
 - Sanitize Date/Time/Phone/Location
 - Geocode location
-- Prettier emails / register / delete account
+- Prettier emails / register / delete account / createRSVP
 - Private RSVP accept via password => create password optionally in schema

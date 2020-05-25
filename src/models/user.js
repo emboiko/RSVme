@@ -39,9 +39,42 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
+//user instance
+userSchema.methods.generateAuthToken = async function() {
+    const user = this;
+    
+    const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET);
+    user.tokens = user.tokens.concat({token});
+    await user.save();
+
+    return token;
+}
+
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.tokens;
+    delete userObject.avatar;
+
+    return userObject;
+}
+
+//User
+userSchema.statics.findByCredentials = async (email, pw) => {
+    const user = await User.findOne({email});
+    if (!user) throw new Error("Unable to login.");
+
+    const isMatch = await bcrypt.compare(pw, user.password);
+    if (!isMatch) throw new Error("Unable to login.");
+
+    return user;
+}
+
 userSchema.virtual("rsvps", {
     ref: "RSVP",
-    localfield: "_id",
+    localField: "_id",
     foreignField: "owner"
 });
 
