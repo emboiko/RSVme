@@ -18,7 +18,10 @@
     <header>
 
         <!-- todo: logo -->
-        <a href="/">Home</a>
+
+        <% if (!locals.noHome) { %>
+            <a href="/">Home</a>
+        <% } %>
 
         <% if (!locals.minHeader) { %>
 

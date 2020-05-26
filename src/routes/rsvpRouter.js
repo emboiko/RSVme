@@ -12,13 +12,13 @@ rsvpRouter.get("/about", checkUser, (req, res) => {
     res.render("about", {user: req.user, pageTitle:"RSVme | About"})
 });
 
-rsvpRouter.get("/rsvp", checkUser, (req, res) => {
+rsvpRouter.get("/rsvp", auth, (req, res) => {
     res.render("create_rsvp", {user: req.user, pageTitle:"RSVme | Create"})
 });
 
 rsvpRouter.post("/rsvp", auth, async (req, res) => {
     const id = new mongoose.Types.ObjectId();
-    const qr = await QRcode.toDataURL(`localhost:3000/rsvp/${id}`); //todo
+    const qr = await QRcode.toDataURL(`localhost:3000/rsvp/${id}`); //todo - env
 
     const rsvp = new RSVP({
         ...req.body,
@@ -70,9 +70,9 @@ rsvpRouter.patch("/rsvp/:id", auth, async (req, res) => {
         updates.forEach((update) => rsvp[update] = req.body[update]);
 
         await rsvp.save();
-        res.status(202).send(rsvp);
+        res.status(202).send(rsvp); //todo
     } catch (err) {
-        res.status(400).send(err)
+        res.status(400).send(err); //todo
     }
 
 });
@@ -82,9 +82,9 @@ rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
         const rsvp = await RSVP.findOneAndDelete({ id: req.params.id, owner: req.user._id });
         if (!rsvp) return res.status(404).send();
 
-        res.status(200).send();
+        res.status(200).send(); // todo
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).render("notfound", {pageTitle:"RSVme | 404"});
     }
 });
 
@@ -117,11 +117,11 @@ rsvpRouter.get("/rsvps", auth, async (req, res) => {
         res.status(200).render("list_rsvp",{user: req.user, rsvps: req.user.rsvps, pageTitle:"RSVme | My RSVPs"});
     } catch (err) {
         console.log(err);
-        res.status(500).redirect("/notfound"); //bit of a hack
+        res.status(500).render("notfound", {pageTitle:"RSVme | 404"});
     }
 });
 
-rsvpRouter.post("/rsvp/:id", async (req, res) => {
+rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
     try {
         const rsvp = await RSVP.findOne({ id: req.params.id })
         if (!rsvp) return res.status(404).send();
@@ -134,12 +134,15 @@ rsvpRouter.post("/rsvp/:id", async (req, res) => {
             return res.status(400).send({ "Error": "Already Registered" });
         }
 
-        //todo: check if we're already declined and remove from declined
-        if (req.body.accepted) {
-            rsvp.num_guests += req.body.num_guests;
-            rsvp.joined = rsvp.joined.concat({ party: req.body.party, email: req.body.email });
+        let joined;
 
-            //todo: probably include the QR + RSVP ID in the email, too.
+        //todo: check if we're already declined and remove from declined
+        if (req.body.accepted === "Accept") {
+            rsvp.num_guests += parseInt(req.body.num_guests);
+            rsvp.joined = rsvp.joined.concat({ party: req.body.party, email: req.body.email });
+            joined = true;
+
+            //todo: probably include the party name, QR + RSVP ID in the email, too.
             acceptEmail(
                 req.body.email,
                 rsvp.author_email,
@@ -152,12 +155,22 @@ rsvpRouter.post("/rsvp/:id", async (req, res) => {
             );
         } else {
             rsvp.declined = rsvp.declined.concat({ party: req.body.party, email: req.body.email });
+            joined = false;
         }
 
         await rsvp.save();
-        res.status(201).send();
+        res.status(201).render(
+            "submitted", 
+            {
+                user: req.user,
+                rsvp,
+                pageTitle:`RSVme | ${joined === true ? "Accepted": "Declined."}`,
+                joined
+            }
+        );
     } catch (err) {
-        res.status(400).send();
+        console.log(err);
+        res.status(400).render("notfound", {pageTitle:"RSVme | 404"});
     }
 });
 

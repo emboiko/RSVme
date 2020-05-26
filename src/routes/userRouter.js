@@ -22,7 +22,7 @@ const upload = multer({
 });
 
 userRouter.get("/",  checkUser, (req, res) => {
-    res.render("index", {user: req.user, pageTitle:"RSVme"});
+    res.render("index", {user: req.user, pageTitle:"RSVme", noHome:true});
 });
 
 //////////////////////
@@ -85,10 +85,10 @@ userRouter.post("/users", async (req, res) => {
         const token = await user.generateAuthToken();
         res.cookie("access_token", token, {httpOnly:true});
 
-        res.status(201).redirect("/");
+        res.status(201).render("registerSuccess", {user, pageTitle:"RSVme | Success"});
     } catch (err) {
-        res.status(400).render("register", {pageTitle:"RSVme", error: err.message});
-    }
+        res.status(400).render("register", {pageTitle:"RSVme", error: "Email is already registered."});
+    } 
 });
 
 userRouter.get("/users/me", auth, async (req, res) => {
@@ -115,9 +115,9 @@ userRouter.delete("/users/me", auth, async (req, res) => {
     try {
         await req.user.remove();
         // cancelEmail(req.user.email, req.user.name);
-        res.status(200).send(); //todo
+        res.status(200).render("accountDeleteSuccess", {pageTitle: "RSVme"}); //todo
     } catch (err) {
-        res.status(500).send(); //todo
+        res.status(500).render("notfound", {pageTitle:"RSVme | 404"}); //todo
     }
 });
 

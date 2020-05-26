@@ -1,0 +1,17 @@
+<%- include("partials/header") %>
+
+<div class="register-success">
+
+    <% if (locals.user) { %>
+        <div class="registered">
+            <p>You've been successfully registered.</p>
+            <p><%=user.name%></p>
+            <p><%=user.email%></p>
+        </div>
+    <% } %>
+    
+</div>
+
+<script src="/js/redirect.js"></script>
+
+<%- include("partials/footer") %>

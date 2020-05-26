@@ -1,0 +1,21 @@
+<%- include("partials/header") %>
+
+
+<div class="submitted">
+
+    <% if (locals.joined) { %>
+        <div class="joined">
+            <p>You've accepted an RSVP for <%=rsvp.title%></p>
+        </div>
+    <% } else { %>
+        <div class="declined">
+            <p>Your RSVP for <%=rsvp.title%> been successfully declined.</p>
+        </div>
+    <% } %>
+
+    
+
+</div>
+
+
+<%- include("partials/footer") %>

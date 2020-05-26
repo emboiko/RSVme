@@ -29,11 +29,46 @@
         <p>
             <%=rsvp.num_guests%> Guests currently registered.
         </p>
-        <p>
-            View the <a href="/rsvp/<%=rsvp.id%>/guests">guestlist</a>
-        </p>
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
+        <button class="btn guests">View the guestlist</button>
+
+        <div class="guestlist">
+
+            derp
+
+            <ul>
+            
+                <% locals.rsvp.joined.forEach((party) => { %>
+            
+                    <li><%=party.party%></li>
+            
+                <% }); %>
+        
+            </ul>
+        
+        </div>
+    
+        
+        <form action="/rsvp/<%=rsvp.id%>" method="POST">
+            <label for="party">*Name</label>
+            <input type="text" name="party" placeholder="John Doe" required>
+            <label for="email">*Email</label>
+            <input type="email" name="email" placeholder="jdoe@gmail.com" required>
+            <label for="num_guests">Number of guests attending</label> 
+            <input type="number" name="num_guests" min="1" value="1" required>
+            <input type="submit" name="accepted" value="Accept">
+            <input type="submit" name="accepted" value="Decline">
+        </form>
+
+
+<!--         
+        <form action="/rsvp/<%=rsvp.id%>" method="POST">
+            <button class="btn decline">Decline</button>
+        </form> -->
+        
     </div>
+
+
+<script src="/js/guestlist.js"></script>
+
 
 <%- include("partials/footer") %>
