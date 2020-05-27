@@ -1,0 +1,15 @@
+<%- include("partials/header") %>
+
+<div id="home-box" class="frontmatter padded-box">
+    <h2 class="mbottom center-text">Delete RSVP</h2>
+    <p class="center-text"> <a href="/rsvp/<%=rsvp.id%>"><%=rsvp.title%></a></p>
+    <p class="center-text mtop">Are you sure?</p>
+    <form action="/rsvp/<%=rsvp.id%>?_method=DELETE" method="POST">
+        <button class="btn submit delete">Delete</button>
+    </form>
+    <button class="btn submit cancel">Cancel</button>
+</div>
+
+<script src="/js/back.js"></script>
+
+<%- include("partials/footer") %>

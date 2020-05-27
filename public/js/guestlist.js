@@ -1,6 +1,6 @@
 let divShowing = false;
 
-document.querySelector(".btn-guests").addEventListener("click", (e) => {
+document.querySelector(".btn-guestlist").addEventListener("click", (e) => {
     divShowing = !divShowing;
     const div = document.querySelector(".guestlist");
 

@@ -47,6 +47,21 @@ rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
     }
 });
 
+rsvpRouter.get("/rsvp/:id/edit", auth, async (req, res) => {
+    try {
+        const rsvp = await RSVP.findOne({ id: req.params.id, owner:req.user._id });
+        if (!rsvp) return res.status(404).send();
+
+        res.status(202).render("edit_rsvp", {
+            user: req.user,
+            rsvp,
+            pageTitle: `RSVme | Edit ${rsvp.title}`
+        });
+    } catch (err) {
+        res.status(400).render("notfound", {user: req.user, pageTitle: "RSVme | 404"});
+    }
+});
+
 rsvpRouter.patch("/rsvp/:id", auth, async (req, res) => {
     const updates = Object.keys(req.body);
     const allowedUpdates = [
@@ -70,11 +85,26 @@ rsvpRouter.patch("/rsvp/:id", auth, async (req, res) => {
         updates.forEach((update) => rsvp[update] = req.body[update]);
 
         await rsvp.save();
-        res.status(202).send(rsvp); //todo
+        res.status(202).redirect(`/rsvp/${rsvp.id}`);
     } catch (err) {
-        res.status(400).send(err); //todo
+        res.status(400).render("notfound", {user: req.user, pageTitle: "RSVme | 404"});
     }
 
+});
+
+rsvpRouter.get("/rsvp/:id/delete", auth, async (req, res) => {
+    try {
+        const rsvp = await RSVP.findOne({ id: req.params.id, owner:req.user._id });
+        if (!rsvp) return res.status(404).send();
+
+        res.status(202).render("delete_rsvp", {
+            user: req.user,
+            rsvp,
+            pageTitle: `RSVme | Delete ${rsvp.title}`
+        });
+    } catch (err) {
+        res.status(400).render("notfound", {user: req.user, pageTitle: "RSVme | 404"});
+    }
 });
 
 rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
@@ -82,9 +112,9 @@ rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
         const rsvp = await RSVP.findOneAndDelete({ id: req.params.id, owner: req.user._id });
         if (!rsvp) return res.status(404).send();
 
-        res.status(200).send(); // todo
+        res.status(200).render("rsvpDeleteSuccess", {user: req.user, pageTitle: "RSVme"});
     } catch (err) {
-        res.status(400).render("notfound", {pageTitle:"RSVme | 404"});
+        res.status(400).render("notfound", {user: req.user, pageTitle:"RSVme | 404"});
     }
 });
 

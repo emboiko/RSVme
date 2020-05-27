@@ -1,0 +1,28 @@
+<%- include("partials/header") %>
+
+    <form id="box" class="frontmatter" action="/rsvp/<%=rsvp.id%>?_method=PATCH" method="POST">
+        <h2 class="mbottom center-text">Edit RSVP</h2>
+        <hr class="mbottom">
+        <p class="mbottom mtop center-text">Who:</p>
+        <label for="author">*Author/Host</label>
+        <input type="text" name="author" value="<%=rsvp.author%>">
+        <label for="author_email">*Email</label>
+        <input type="email" name="author_email" value="<%=rsvp.author_email%>">
+        <label for="author_phone">Phone</label>
+        <input type="text" name="author_phone" value="<%=rsvp.author_phone%>">
+        <p class="mbottom mtop center-text">What:</p>
+        <label for="title">*Title</label>
+        <input type="text" name="title" id="title" value="<%=rsvp.title%>">
+        <label for="description">Description</label>
+        <textarea class="mbottom" type="text" name="description"><%=rsvp.description%></textarea>
+        <p class="mbottom mtop center-text">When &amp; Where:</p>
+        <label for="location">*Location</label>
+        <input type="text" name="location" value="<%=rsvp.location%>">
+        <label for="date">*Date</label>
+        <input type="text" name="date" value="<%=rsvp.date%>">
+        <label for="time">*Time</label>
+        <input type="text" name="time" value="<%=rsvp.time%>">
+        <button class="btn submit mtop">Submit</button>
+    </form>
+
+<%- include("partials/footer") %>

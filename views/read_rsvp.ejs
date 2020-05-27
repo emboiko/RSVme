@@ -1,6 +1,6 @@
 <%- include("partials/header") %>
 
-    <div id="box" class="frontmatter">
+    <div id="box" class="frontmatter padded-box read">
         <img class="qr-img" src="<%= rsvp.qr %>" alt="QR">
         <p class="center-text">
             <%=rsvp.title%>
@@ -29,18 +29,16 @@
         <p class="center-text">
             <%=rsvp.num_guests%> Guests currently registered.
         </p>
-        <button class="btn-guests">Show the guestlist</button>
-
+        
+        <button class="btn submit mtop btn-guestlist">Show the guestlist</button>
         <div class="guestlist">
-            <ul class="rsvp-list center-text">
+            <ul class="partylist center-text">
                 <% rsvp.joined.forEach((party) => { %>
-            
-                    <li><%=party.party%></li>
-            
+                    <li class="mtop"><%=party.party%></li>
                 <% }); %>
             </ul>
         </div>
-    
+        <hr class="mtop">
         <form action="/rsvp/<%=rsvp.id%>" method="POST">
             <h2 class="center-text">RSVP</h2>
             <label for="party">*Name</label>

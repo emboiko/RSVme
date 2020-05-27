@@ -9,6 +9,8 @@ body {
     background-color: #F0F3F4;
     font-size: 1.1em;
     font-family: "Montserrat";
+    background-image: url("/img/bg.jpg");
+    background-repeat: no-repeat;
 }
 
 .qr-img {
@@ -24,6 +26,11 @@ body {
 
 .plane {
     width: 100px;
+    margin: 0 auto;
+}
+
+.icon {
+    width:50px;
     margin: 0 auto;
 }
 
@@ -145,6 +152,16 @@ form label {
     padding: 15px;
 }
 
+.about img {
+    height: 60px;
+    margin-right: 10px;
+}
+
+.about-box {
+    display: flex;
+    align-items: center;
+}
+
 .avatar {
     width:250px;
 }
@@ -153,13 +170,18 @@ form label {
     display: none;
 }
 
+.partylist {
+    list-style: none;
+    margin: 0 auto;
+}
+
 .error {
     margin-top: 10px;
     color:red;
 }
 
 .submit {
-    width: 30%;
+    width: 25%;
     margin: 0 auto;
 }
 
@@ -179,22 +201,19 @@ form label {
     list-style: none;
 }
 
-.btn-guests {
-    padding: 5px;
-    width: 50%;
-    margin: 10px auto 0 auto;
-    font-size: 18px;
-    border:2px solid #3498DB;
-    background-color: #F0F3F4;
-    color: #3498DB;
-    border-radius: 5px;
-    transition-duration: 0.3s;
+.rsvp-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.1em;
 }
 
-.btn-guests:hover {
-    cursor: pointer;
-    color: #F0F3F4;
-    background-color: #3498DB;
+.rsvp-list li a {
+    max-width: 650px;
+}
+
+.display {
+    text-decoration: underline;
 }
 
 textarea {
@@ -215,6 +234,7 @@ textarea {
     background-color: #F0F3F4;
     color: red;
     border: 2px solid red;
+
 }
 
 .delete:hover {
@@ -228,4 +248,8 @@ textarea {
 
 .noborder {
     border: none;
+}
+
+.cancel {
+    width: 100px;
 }

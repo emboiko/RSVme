@@ -3,13 +3,31 @@
 <div id="box" class="frontmatter">
 
     <h2 class="display center-text">My RSVPs</h2>
-    <p class="center-text">RSVPs you have created will be listed here.</p>
+
+    <% if (!rsvps.length) { %>
+        <p class="center-text">RSVPs you have created will be listed here.</p>
+        <p class="center-text mtop">
+            Create a new <a href="/rsvp">RSVP</a>
+        </p>
+    <% }  else { %>
+        <img class="icon" src="/img/paper_airplane.png" alt="paper_airplane">
+    <% } %>
     
     <div class="rsvp-list-box">
 
         <ul class="rsvp-list">
             <% rsvps.forEach((rsvp) => { %>
-                <li> <a href="/rsvp/<%=rsvp.id%>"> <%=rsvp.title%> </a> </li>
+                <hr>
+                <li> 
+                    <a href="/rsvp/<%=rsvp.id%>"> <%=rsvp.title%> </a> 
+                    <div>
+                        <p></p>
+                    </div>
+                    <div>
+                        <a href="/rsvp/<%=rsvp.id%>/edit">Edit</a>
+                        <a href="/rsvp/<%=rsvp.id%>/delete">Delete</a> 
+                    </div>
+                </li>
             <% }); %>
     
         </ul>
