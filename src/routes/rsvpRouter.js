@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
 const checkUser = require("../middleware/checkUser");
 const RSVP = require("../models/RSVP");
-const {acceptEmail, creationEmail} = require("../email/Email");
+const {acceptEmail, creationEmail} = require("../email/email");
 
 const rsvpRouter = new express.Router();
 
