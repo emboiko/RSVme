@@ -13,12 +13,12 @@ rsvpRouter.get("/about", checkUser, (req, res) => {
 });
 
 rsvpRouter.get("/rsvp", auth, (req, res) => {
-    res.render("create_rsvp", {user: req.user, pageTitle:"RSVme | Create"})
+    res.render("create_rsvp", {user: req.user, pageTitle:"RSVme | New"})
 });
 
 rsvpRouter.post("/rsvp", auth, async (req, res) => {
     const id = new mongoose.Types.ObjectId();
-    const qr = await QRcode.toDataURL(`localhost:3000/rsvp/${id}`); //todo - env
+    const qr = await QRcode.toDataURL(`${process.env.URL}/rsvp/${id}`);
 
     const rsvp = new RSVP({
         ...req.body,
@@ -42,6 +42,16 @@ rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id })
         if (!rsvp) return res.status(404).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
         res.status(201).render("read_rsvp", {user:req.user, rsvp, pageTitle:rsvp.title});
+    } catch (err) {
+        res.status(400).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
+    }
+});
+
+rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
+    try {
+        const rsvp = await RSVP.findOne({ id: req.params.id })
+        if (!rsvp) return res.status(404).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
+        res.status(201).render("qr", {user: req.user, rsvp, pageTitle: "RSVme"});
     } catch (err) {
         res.status(400).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
     }

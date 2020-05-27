@@ -13,9 +13,14 @@ body {
     background-repeat: no-repeat;
 }
 
-.qr-img {
-    align-self: center;
+#qr {
+    margin: 33vh auto 0 auto;
     width: 200px;
+}
+
+.qr-img {
+    display: block;
+    margin: 0 auto;
 }
 
 .favicon {
@@ -162,6 +167,11 @@ form label {
     align-items: center;
 }
 
+.about ul {
+    margin: 0 auto;
+    text-align: center;
+}
+
 .avatar {
     width:250px;
 }
@@ -178,6 +188,11 @@ form label {
 .error {
     margin-top: 10px;
     color:red;
+}
+
+.mid {
+    width: 160px;
+    margin: 0 auto;
 }
 
 .submit {
@@ -209,7 +224,11 @@ form label {
 }
 
 .rsvp-list li a {
-    max-width: 650px;
+    width: 625px;
+}
+
+.rsvp-list-actions {
+    width: 180px;
 }
 
 .display {
@@ -226,8 +245,20 @@ textarea {
 }
 
 .aform button {
-    margin: 0;
-    width: 250px;
+    width: 200px;
+}
+
+.aform {
+    margin: 0 auto;
+}
+
+.aform img {
+    display: block;
+    margin: 0 auto;
+}
+
+.aform input {
+    margin-left: 105px;
 }
 
 .delete {

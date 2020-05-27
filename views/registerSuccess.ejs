@@ -1,19 +1,15 @@
 <%- include("partials/header") %>
 
-<div class="register-success">
+<div id="home-box" class="frontmatter padded-box">
 
-    <div class="frontmatter padded-box">
-    
-        <% if (locals.user) { %>
-            <div class="registered">
-                <h2 class="mbottom center-text">You've been successfully registered.</h2>
-                <p class="center-text"><%=user.name%></p>
-                <p class="center-text"><%=user.email%></p>
-            </div>
-        <% } %>
+    <% if (locals.user) { %>
+        <div class="registered">
+            <h2 class="mbottom center-text">You've been successfully registered.</h2>
+            <p class="center-text"><%=user.name%></p>
+            <p class="center-text"><%=user.email%></p>
+        </div>
+    <% } %>
 
-    </div>
-    
 </div>
 
 <script src="/js/redirect.js"></script>

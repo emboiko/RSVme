@@ -1,7 +1,6 @@
 <%- include("partials/header") %>
 
     <div id="box" class="frontmatter padded-box read">
-        <img class="qr-img" src="<%= rsvp.qr %>" alt="QR">
         <p class="center-text">
             <%=rsvp.title%>
         </p>
@@ -30,7 +29,7 @@
             <%=rsvp.num_guests%> Guests currently registered.
         </p>
         
-        <button class="btn submit mtop btn-guestlist">Show the guestlist</button>
+        <button class="btn submit mtop btn-guestlist">Show the guest-list</button>
         <div class="guestlist">
             <ul class="partylist center-text">
                 <% rsvp.joined.forEach((party) => { %>
@@ -45,7 +44,7 @@
             <input type="text" name="party" value="<%=locals.user ? user.name : ''%>" placeholder="John Doe" required>
             <label for="email">*Email</label>
             <input type="email" name="email" value="<%=locals.user ? user.email : ''%>" placeholder="jdoe@gmail.com" required>
-            <label for="num_guests">Number of guests attending</label> 
+            <label for="num_guests">Number of guests in party</label> 
             <input type="number" name="num_guests" min="1" value="1" required>
 
             <% if (locals.error) { %>

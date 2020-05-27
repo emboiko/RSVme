@@ -1,22 +1,22 @@
 <%- include("partials/header") %>
 
     <div id="box" class="frontmatter">
-
+        <h2 class="center-text mtop">Account</h2>
         <%if (locals.error) {%>
-            <p><%=error%></p>
+            <p class="error center-text mtop"><%=error%></p>
         <%}%>
 
         <form class="aform" action="/users/me/avatar" method="POST" enctype="multipart/form-data">
             <input class="finput" type="file" name="avatar">
             <% if (user.avatar) { %>
-                <img class="avatar mbottom" src="/users/<%=user._id%>/avatar" alt="Avatar">
+                <img class="avatar" src="/users/<%=user._id%>/avatar" alt="Avatar">
             <% } %>
-            <button class="btn submit">Update Avatar</button>
+            <button class="btn submit mtop">Upload</button>
         </form>
 
         <form action="/users/me?_method=PATCH" method="POST">
             
-            <p>Name:</p>
+            <p>*Name:</p>
             <p><%=locals.user.name%></p>
             <input type="text" name="name" value="<%=user.name%>">
             
@@ -24,17 +24,15 @@
             <p><%=locals.user.phone%></p>
             <input type="text" name="phone" value="<%=user.phone%>">
             
-            <p>Email:</p>
+            <p>*Email:</p>
             <p><%=locals.user.email%></p>
             <input type="email" name="email" value="<%=user.email%>">
 
-            <button class="btn submit">Update Information</button>
+            <button class="btn submit mtop">Update Information</button>
             
         </form>
         
-        <form action="/users/me?_method=DELETE" method="POST">
-            <button class="btn submit delete">Delete Account</button>
-        </form>
+        <a class="error mid center-text mbottom" href="/users/me/delete">Delete Account</a>
 
     </div>
 

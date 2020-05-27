@@ -112,6 +112,10 @@ userRouter.patch("/users/me", auth, async (req, res) => {
     }
 });
 
+userRouter.get("/users/me/delete", auth, async(req, res) => {
+    res.render("delete_account", {user: req.user, pageTitle: "RSVme | Delete Account"});
+});
+
 userRouter.delete("/users/me", auth, async (req, res) => {
     try {
         await req.user.remove();
@@ -125,6 +129,7 @@ userRouter.delete("/users/me", auth, async (req, res) => {
 //////////////////////
 
 userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
+    if (!req.file) return res.render("account", {user:req.user, error: "Please choose a file before uploading.", pageTitle:"RSVme | Account"});
     const buffer = await sharp(req.file.buffer)
         .resize({ width: 250, height: 250 })
         .png()
