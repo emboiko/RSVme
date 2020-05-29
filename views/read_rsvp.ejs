@@ -4,7 +4,9 @@
         <h2 class="center-text mbottom">
             <%=rsvp.title%>
         </h2>
-        <img class="rsvp-img" src="/rsvp/<%=rsvp.id%>/img" alt="rsvp-image">
+        <% if (rsvp.img) { %>
+            <img class="rsvp-img" src="/rsvp/<%=rsvp.id%>/img" alt="rsvp-image">
+        <% } %>
         <p class="center-text mbottom">
             <%=rsvp.description%>
         </p>

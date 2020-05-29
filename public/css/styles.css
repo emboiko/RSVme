@@ -102,7 +102,6 @@ a:hover {
 .frontmatter {
     position: relative;
     margin: 50px auto 0 auto;
-    /* border: 2px solid #202020; */
     display:flex;
     flex-direction: column;
 }
@@ -232,7 +231,7 @@ form label {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 .rsvp-list li a {
@@ -240,7 +239,7 @@ form label {
 }
 
 .rsvp-list-actions {
-    width: 180px;
+    width: 200px;
 }
 
 textarea {
@@ -273,7 +272,6 @@ textarea {
     background-color: #F0F3F4;
     color: red;
     border: 2px solid red;
-
 }
 
 .delete:hover {
@@ -291,8 +289,4 @@ textarea {
 
 .cancel {
     width: 100px;
-}
-
-.read {
-
 }

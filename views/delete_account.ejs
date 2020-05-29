@@ -3,7 +3,7 @@
 <div id="home-box" class="frontmatter padded-box">
     <h2 class="mbottom center-text">Delete Account</h2>
     <p class="center-text"><%=user.name%></a></p>
-    <p class="center-text mtop">Are you sure?</p>
+    <p class="center-text mtop">Are you sure? This operation cannot be reversed.</p>
     <form action="/users/me?_method=DELETE" method="POST">
         <button class="btn submit delete">Delete</button>
     </form>

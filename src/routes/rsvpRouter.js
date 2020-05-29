@@ -21,10 +21,13 @@ rsvpRouter.get("/rsvp", auth, (req, res) => {
 rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
     const id = new mongoose.Types.ObjectId();
     const qr = await QRcode.toDataURL(`${process.env.URL}/rsvp/${id}`);
-    const buffer = await sharp(req.file.buffer)
-    .resize({ width: 500, height: 500 })
-    .png()
-    .toBuffer();
+    let buffer;
+    if (req.file) {
+        buffer = await sharp(req.file.buffer)
+        .resize({ width: 500, height: 500 })
+        .png()
+        .toBuffer();
+    }
 
     const rsvp = new RSVP({
         ...req.body,
@@ -78,7 +81,7 @@ rsvpRouter.get("/rsvp/:id/img", checkUser, async (req, res) => {
 rsvpRouter.get("/rsvp/:id/edit", auth, async (req, res) => {
     try {
         const rsvp = await RSVP.findOne({ id: req.params.id, owner:req.user._id });
-        if (!rsvp) return res.status(404).send();
+        if (!rsvp) return res.status(404).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
 
         res.status(202).render("edit_rsvp", {
             user: req.user,
@@ -105,11 +108,16 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
     ];
 
     const valid = updates.every((update) => allowedUpdates.includes(update));
-    if (!valid) return res.status(400).send({ error: "Invalid Updates" });
+    if (!valid) return res.status(400).render("edit_rsvp", {
+        error: "Invalid updates",
+        user: req.user,
+        rsvp,
+        pageTitle: `RSVme | Edit ${rsvp.title}`
+    });
 
     try {
         const rsvp = await RSVP.findOne({ id: req.params.id, owner:req.user._id });
-        if (!rsvp) return res.status(404).send();
+        if (!rsvp) return res.status(404).render("notfound", {user:req.user, pageTitle:"RSVme | 404"});
 
         updates.forEach((update) => rsvp[update] = req.body[update]);
 
