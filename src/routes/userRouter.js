@@ -92,7 +92,7 @@ userRouter.post("/users", noAuth, async (req, res) => {
 userRouter.get("/users/me", auth, async (req, res) => {
     res.status(200).render("account", {
         user: req.user,
-        pageTitle: `RSVme | ${req.user.name}`
+        pageTitle: `RSVme | ${req.user.first_name}`
     });
 });
 
@@ -149,7 +149,7 @@ userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, r
     if (!req.file) return res.status(400).render("account", {
         user: req.user,
         error: "Please choose a file before uploading.",
-        pageTitle: `RSVme | ${req.user.name}`
+        pageTitle: `RSVme | ${req.user.first_name}`
     });
 
 
@@ -163,6 +163,7 @@ userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, r
     res.status(202).redirect("/users/me");
 
 }, (err, req, res, next) => {
+    console.log(err);
     res.status(400).render("notfound", {
         user: req.user,
         pageTitle: "RSVme | 404"
