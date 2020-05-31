@@ -28,7 +28,6 @@
 
 - Delete RSVP after expiration optionally
 - Sanitize Date/Time/Phone/Location
-- Split name => First/last
 - Geocode location
 - Prettier emails / register / delete account / createRSVP => uncomment calls
 - Private RSVP accept via password/pin
@@ -41,5 +40,4 @@
 - Preview RSVP
 - token lifespan
 - tests*
-- error handlers/messages/automation*
-- timeout*
+- error handlers/messages*

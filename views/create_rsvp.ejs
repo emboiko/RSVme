@@ -10,7 +10,7 @@
         <hr class="mbottom">
         <p class="mbottom mtop center-text">Who:</p>
         <label for="author">*Author/Host</label>
-        <input type="text" name="author" value="<%=user.name%>">
+        <input type="text" name="author" value="<%=user.first_name + ' ' + user.last_name%>">
         <label for="author_email">*Email</label>
         <input type="email" name="author_email" value="<%=user.email%>">
         <label for="author_phone">Phone</label>

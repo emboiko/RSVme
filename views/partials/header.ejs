@@ -21,27 +21,33 @@
 
         <% if (!locals.minHeader) { %>
 
-            <% if (locals.user) { %>
-                <div class="midlinks-box">
-                    <a href="/rsvp">New RSVP</a>
-                    <a href="/rsvps">My RSVPs</a>
-                    <a href="/users/me">Account</a>
-                </div>
-                <div class="user-box">
-                    <span class="user"><%= user.name %></span>
-                    <form class="logout" action="/users/logout" method="POST">
-                        <button class="btn">
-                            Logout
-                        </button>
-                    </form>
-                </div>
-            <% } else { %>
-                <div class="midlinks-box">
-                    <a href="/users">Register</a>
-                    <a href="/users/login">Login</a>
-                </div>
-            <% } %>
+        <% if (locals.user) { %>
+        <div class="midlinks-box">
+            <a href="/rsvp">New RSVP</a>
+            <a href="/rsvps">My RSVPs</a>
+            <a href="/users/me">Account</a>
+        </div>
+        <div class="user-box">
+            <span class="user"><%= user.first_name %></span>
+            <form class="logout" action="/users/logout" method="POST">
+                <button class="btn">
+                    Logout
+                </button>
+            </form>
+        </div>
+        <% } else { %>
+        <div class="midlinks-box">
+            <a href="/users">Register</a>
+            <a href="/users/login">Login</a>
+        </div>
+        <% } %>
 
+        <% } else { %>
+        <div class="minheader">
+            <p>
+                <span id="RSV">RSV</span><span id="me">me</span>
+            </p>
+        </div>
         <% } %>
 
     </header>

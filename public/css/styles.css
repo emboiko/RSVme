@@ -35,6 +35,15 @@ body {
     margin: 0 auto;
 }
 
+.minheader {
+    font-size: 0.33em;
+    margin-top: 15px;
+}
+
+.minheader #RSV {
+    line-height: 20px;
+}
+
 .icon {
     width:50px;
     margin: 0 auto;

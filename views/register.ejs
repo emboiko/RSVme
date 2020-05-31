@@ -7,18 +7,20 @@
     </p>
 
     <% if (locals.error) { %>
-        <p class="error center-text"><%=error%></p>
+    <p class="error center-text"><%=error%></p>
     <% } %>
 
     <form class="authForm" action="/users" method="POST">
-        <label for="name">*Name</label>
-        <input type="name" name="name" required>
-        <label for="phone">Phone</label>
-        <input type="phone" name="phone">
+        <label for="first_name">*First Name</label>
+        <input type="first_name" name="first_name" required>
+        <label for="last_name">*Last Name</label>
+        <input type="last_name" name="last_name" required>
         <label for="email">*Email</label>
         <input type="email" name="email" required>
         <label for="password">*Password</label>
         <input type="password" name="password" required>
+        <label for="phone">Phone</label>
+        <input type="phone" name="phone">
         <button class="btn submit mtop">Submit</button>
     </form>
 </div>

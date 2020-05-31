@@ -5,10 +5,17 @@ const jwt = require("jsonwebtoken");
 const RSVP = require("./RSVP");
 
 const userSchema = new mongoose.Schema({
-    name: {
+    first_name: {
         type: String,
-        required: true,
-        trim: true
+        required: [true, "First name is required."],
+        trim: true,
+        maxlength: [60, "First name must be 60 characters or less."]
+    },
+    last_name: {
+        type: String,
+        required: [true, "Last name is required."],
+        trim: true,
+        maxlength: [60, "Last name must be 60 characters or less."]
     },
     phone: {
         type: String,
@@ -28,7 +35,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 7
+        minlength: [7, "Password must be longer than 7 characters."]
     },
     avatar: {
         type: Buffer
@@ -44,17 +51,17 @@ const userSchema = new mongoose.Schema({
 });
 
 //user instance
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    
-    const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET);
-    user.tokens = user.tokens.concat({token});
+
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+    user.tokens = user.tokens.concat({ token });
     await user.save();
 
     return token;
 }
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
 
@@ -67,7 +74,7 @@ userSchema.methods.toJSON = function() {
 
 //User
 userSchema.statics.findByCredentials = async (email, pw) => {
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) throw new Error("Unable to login.");
 
     const isMatch = await bcrypt.compare(pw, user.password);

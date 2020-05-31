@@ -75,9 +75,16 @@ userRouter.post("/users", noAuth, async (req, res) => {
             pageTitle: "RSVme"
         });
     } catch (err) {
+        const index = err.message.lastIndexOf(":");
+        let error = err.message.substr(index + 1);
+
+        if (err.code === 11000) {
+            error = "Email is already registered."
+        }
+
         res.status(400).render("register", {
             pageTitle: "RSVme | Register",
-            error: "Email is already registered."
+            error
         });
     }
 });
@@ -105,9 +112,11 @@ userRouter.patch("/users/me", auth, async (req, res) => {
         await req.user.save();
         res.status(202).redirect("/users/me");
     } catch (err) {
+        const index = err.message.lastIndexOf(":");
+        const substr = err.message.substr(index + 1);
         res.status(400).render("account", {
             user: req.user,
-            error: err.message,
+            error: substr,
             pageTitle: `RSVme | ${req.user.name}`
         });
     }

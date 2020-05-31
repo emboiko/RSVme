@@ -14,7 +14,8 @@ const RSVP_Schema = new mongoose.Schema({
         required: true
     },
     author_phone: {
-        type: Number,
+        type: String,
+        trim: true
     },
     title: {
         type: String,
