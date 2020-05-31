@@ -1,7 +1,11 @@
 <%- include("partials/header") %>
 
-    <form id="box" class="frontmatter" action="/rsvp/<%=rsvp.id%>?_method=PATCH" method="POST" enctype="multipart/form-data">
-        <h2 class="mbottom center-text">Edit RSVP</h2>
+<div id="box" class="frontmatter">
+    <% if (locals.error) { %>
+    <p class="error center-text mtop mbottom"><%=error%></p>
+    <% } %>
+    <form action="/rsvp/<%=rsvp.id%>?_method=PATCH" method="POST" enctype="multipart/form-data">
+        <h2 class="mtop mbottom center-text">Edit RSVP</h2>
         <hr class="mbottom">
         <p class="mbottom mtop center-text">Who:</p>
         <label for="author">*Author/Host</label>
@@ -16,7 +20,7 @@
         <label for="description">Description</label>
         <textarea class="mbottom" type="text" name="description"><%=rsvp.description%></textarea>
         <p class="mbottom mtop center-text">Image (jpg/png)</p>
-        <input class="finput rsvp-img-upload" type="file" name="rsvp-img">
+        <input class="finput rsvp-img-upload" type="file" accept=".jpeg,.jpg,.png" name="rsvp-img">
         <p class="mbottom mtop center-text">When &amp; Where:</p>
         <label for="location">*Location</label>
         <input type="text" name="location" value="<%=rsvp.location%>">
@@ -24,7 +28,9 @@
         <input type="text" name="date" value="<%=rsvp.date%>">
         <label for="time">*Time</label>
         <input type="text" name="time" value="<%=rsvp.time%>">
-        <button class="btn submit mtop">Submit</button>
+        <button class="btn submit mtop mbottom">Submit</button>
     </form>
+
+</div>
 
 <%- include("partials/footer") %>

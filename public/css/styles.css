@@ -82,6 +82,7 @@ header a {
     color: #3498DB;
     border-radius: 5px;
     transition-duration: 0.3s;
+    outline: none;
 }
 
 .btn:hover {
@@ -364,37 +365,34 @@ textarea {
         margin-bottom: 25px;
     }
 
-/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
-
     form {
         padding:0;
         width: 90vw;
     }
 
-    form p {
-        width: 90%;
-        margin: 0 auto;
-    }
-    
     form input {
-        width: 90%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
-    }
-
-    .aform button {
-        margin-bottom: 10px;
     }
 
     .avatar {
         width:150px;
     }
 
-/*xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
-
     .authForm {
-        margin: 20px auto 0 auto;
-        width: 100%;
+        margin-top: 20px;
     }
 
-  }
+    .rsvp-img-upload {
+        width: 66%;
+        margin-left: 55px;
+    }
+
+}
+
+@media screen and (min-width: 2300px) {
+    body {
+        background-size: cover;
+    }
+}

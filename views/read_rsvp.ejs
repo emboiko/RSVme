@@ -1,64 +1,65 @@
 <%- include("partials/header") %>
 
-    <div id="box" class="frontmatter padded-box read">
-        <h2 class="center-text mbottom">
-            <%=rsvp.title%>
-        </h2>
-        <% if (rsvp.img) { %>
-            <img class="rsvp-img" src="/rsvp/<%=rsvp.id%>/img" alt="rsvp-image">
-        <% } %>
-        <p class="center-text mbottom">
-            <%=rsvp.description%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.location%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.date%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.time%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.author%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.author_email%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.author_phone%>
-        </p>
-        <p class="center-text">
-            <%=rsvp.joined.length%> parties registered | <%=rsvp.num_guests%> total guests.
-        </p>
-        
-        <button class="btn submit mtop btn-guestlist">Show the guest-list</button>
-        <div class="guestlist">
-            <ul class="partylist center-text">
-                <% rsvp.joined.forEach((party) => { %>
-                    <li class="mtop"><%=party.party%></li>
-                <% }); %>
-            </ul>
-        </div>
-        <hr class="mtop">
-        <form action="/rsvp/<%=rsvp.id%>" method="POST">
-            <h2 class="center-text">RSVP</h2>
-            <label for="party">*Party Name</label>
-            <input type="text" name="party" value="<%=locals.user ? user.name : ''%>" placeholder="John Doe" required>
-            <label for="email">*Email</label>
-            <input type="email" name="email" value="<%=locals.user ? user.email : ''%>" placeholder="jdoe@gmail.com" required>
-            <label for="num_guests">Number of guests in party</label> 
-            <input type="number" name="num_guests" min="1" value="1" required>
+<div id="box" class="frontmatter">
+    <h2 class="center-text mbottom">
+        <%=rsvp.title%>
+    </h2>
+    <% if (rsvp.img) { %>
+    <img class="rsvp-img" src="/rsvp/<%=rsvp.id%>/img" alt="rsvp-image">
+    <% } %>
+    <p class="center-text mbottom">
+        <%=rsvp.description%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.location%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.date%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.time%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.author%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.author_email%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.author_phone%>
+    </p>
+    <p class="center-text">
+        <%=rsvp.joined.length%> parties registered | <%=rsvp.num_guests%> total guests.
+    </p>
 
-            <% if (locals.error) { %>
-                <p class="center-text mbottom error"><%=error%></p>
-            <% } %>
-
-            <input class="btn submit mbottom mtop" type="submit" name="accepted" value="Accept">
-            <input class="btn submit delete" type="submit" name="accepted" value="Decline">
-        </form>
-        
+    <button class="btn submit mtop btn-guestlist">Show the guest-list</button>
+    <div class="guestlist">
+        <ul class="partylist center-text">
+            <% rsvp.joined.forEach((party) => { %>
+            <li class="mtop"><%=party.party%></li>
+            <% }); %>
+        </ul>
     </div>
+    <hr class="mtop">
+    <h2 class="center-text mtop">RSVP</h2>
+    <form action="/rsvp/<%=rsvp.id%>" method="POST">
+        <label for="party">*Party Name</label>
+        <input type="text" name="party" value="<%=locals.user ? user.name : ''%>" placeholder="John Doe" required>
+        <label for="email">*Email</label>
+        <input type="email" name="email" value="<%=locals.user ? user.email : ''%>" placeholder="jdoe@gmail.com"
+            required>
+        <label for="num_guests">Number of guests in party</label>
+        <input type="number" name="num_guests" min="1" value="1" required>
+
+        <% if (locals.error) { %>
+        <p class="center-text mbottom error"><%=error%></p>
+        <% } %>
+
+        <input class="btn submit mbottom mtop" type="submit" name="accepted" value="Accept">
+        <input class="btn submit delete" type="submit" name="accepted" value="Decline">
+    </form>
+
+</div>
 
 <script src="/js/guestlist.js"></script>
 

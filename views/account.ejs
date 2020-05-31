@@ -1,10 +1,10 @@
 <%- include("partials/header") %>
 
-    <div id="box" class="frontmatter">
-        <h2 class="center-text mtop">Account</h2>
-        <%if (locals.error) {%>
-            <p class="error center-text mtop"><%=error%></p>
-        <%}%>
+<div id="box" class="frontmatter">
+    <h2 class="center-text mtop">Account</h2>
+    <%if (locals.error) {%>
+    <p class="error center-text mtop"><%=error%></p>
+    <%}%>
 
         <form class="logout mid center-text mtop" action="/users/logout" method="POST">
             <button class="btn mbottom">
@@ -15,31 +15,31 @@
         <form class="aform" action="/users/me/avatar" method="POST" enctype="multipart/form-data">
             <input class="finput mtop" type="file" name="avatar">
             <% if (user.avatar) { %>
-                <img class="avatar" src="/users/<%=user._id%>/avatar" alt="Avatar">
-            <% } %>
-            <button class="btn submit mtop">Upload Avatar</button>
-        </form>
+    <img class="avatar" src="/users/<%=user._id%>/avatar" alt="Avatar">
+    <% } %>
+    <button class="btn submit mtop mbottom">Upload Avatar</button>
+    </form>
 
-        <form class="user-info" action="/users/me?_method=PATCH" method="POST">
-            
-            <p>*Name:</p>
-            <p><%=locals.user.name%></p>
-            <input type="text" name="name" value="<%=user.name%>">
-            
-            <p>Phone:</p>
-            <p><%=locals.user.phone%></p>
-            <input type="text" name="phone" value="<%=user.phone%>">
-            
-            <p>*Email:</p>
-            <p><%=locals.user.email%></p>
-            <input type="email" name="email" value="<%=user.email%>">
+    <form class="user-info" action="/users/me?_method=PATCH" method="POST">
 
-            <button class="btn submit mtop">Update Information</button>
-            
-        </form>
-        
-        <a class="error mid center-text mtop" href="/users/me/delete">Delete Account</a>
+        <p>*Name:</p>
+        <p><%=locals.user.name%></p>
+        <input type="text" name="name" value="<%=user.name%>">
 
-    </div>
+        <p>Phone:</p>
+        <p><%=locals.user.phone%></p>
+        <input type="text" name="phone" value="<%=user.phone%>">
+
+        <p>*Email:</p>
+        <p><%=locals.user.email%></p>
+        <input type="email" name="email" value="<%=user.email%>">
+
+        <button class="btn submit mtop">Update Information</button>
+
+    </form>
+
+    <a class="error mid center-text mtop" href="/users/me/delete">Delete Account</a>
+
+</div>
 
 <%- include("partials/footer") %>
