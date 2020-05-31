@@ -163,10 +163,13 @@ userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, r
     res.status(202).redirect("/users/me");
 
 }, (err, req, res, next) => {
-    console.log(err);
-    res.status(400).render("notfound", {
+    const index = err.message.lastIndexOf(":");
+    let error = err.message.substr(index + 1);
+
+    res.status(400).render("account", {
         user: req.user,
-        pageTitle: "RSVme | 404"
+        error,
+        pageTitle: `RSVme | ${req.user.first_name}`
     });
 });
 
