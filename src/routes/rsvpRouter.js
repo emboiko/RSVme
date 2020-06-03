@@ -175,18 +175,17 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
         pageTitle: `RSVme | Edit ${rsvp.title}`
     });
 
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404"
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404"
+    });
 
+    try {
         updates.forEach((update) => rsvp[update] = req.body[update]);
 
-        let buffer;
         if (req.file) {
-            buffer = await sharp(req.file.buffer)
+            const buffer = await sharp(req.file.buffer)
                 .resize({ width: 500, height: 500 })
                 .png()
                 .toBuffer();
@@ -197,9 +196,14 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
         await rsvp.save();
         res.status(202).redirect(`/rsvp/${rsvp.id}`);
     } catch (err) {
-        res.status(400).render("notfound", {
+        const index = err.message.lastIndexOf(":");
+        let error = err.message.substr(index + 1);
+        
+        res.status(400).render("edit_rsvp", {
+            error,
             user: req.user,
-            pageTitle: "RSVme | 404"
+            rsvp,
+            pageTitle: `RSVme | Edit ${rsvp.title}`
         });
     }
 

@@ -14,10 +14,18 @@
         <%=rsvp.location%>
     </p>
     <p class="center-text">
-        <%=rsvp.date%>
+        
+        <!-- Returns the day of the week, according to universal time (from 0-6) -->
+        <%= new Date(rsvp.date).getUTCMonth() + 1%>
+        /
+        <!-- (1-31) -->
+        <%= new Date(rsvp.date).getUTCDate()%>
+        /
+        <%= new Date(rsvp.date).getUTCFullYear()%>
+
     </p>
 
-    <p class="center-text">
+    <p class="center-text mbottom">
         <%- new Date('1970-01-01T' + rsvp.time + 'Z').toLocaleTimeString({}, {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}); %>
         <% if (rsvp.end_time) { %>
                 - 
@@ -32,7 +40,7 @@
     <p class="center-text">
         <%=rsvp.author_email%>
     </p>
-    <p class="center-text">
+    <p class="center-text mbottom">
         <%=rsvp.author_phone%>
     </p>
     <p class="center-text">

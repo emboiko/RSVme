@@ -5,6 +5,7 @@
     <p class="error center-text mtop mbottom"><%=error%></p>
     <% } %>
     <form action="/rsvp" method="POST" enctype="multipart/form-data">
+
         <h2 class="mbottom center-text">New RSVP</h2>
         <img class="icon mbottom" src="/img/paper_airplane.png" alt="paper_airplane">
         <hr class="mbottom">
@@ -25,8 +26,10 @@
         <p class="mbottom mtop center-text">When &amp; Where:</p>
         <label for="location">*Location</label>
         <input type="text" name="location">
+        
         <label for="date">*Date</label>
-        <input type="text" name="date">
+        <input type="date" name="date">
+        
         <label for="time">*Start Time</label>
         <input type="time" name="time">
         <label for="end_time">End Time</label>

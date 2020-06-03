@@ -1,13 +1,16 @@
 let divShowing = false;
 
-document.querySelector(".btn-guestlist").addEventListener("click", (e) => {
-    divShowing = !divShowing;
-    const div = document.querySelector(".guestlist");
+const guestList = document.querySelector(".btn-guestlist");
 
-    if (divShowing) {
-        div.style.display = "inline-block";
-    } else {
-        div.style.display = "none";
-    }
-
-});
+if (guestList) {
+    guestList.addEventListener("click", (e) => {
+        divShowing = !divShowing;
+        const div = document.querySelector(".guestlist");
+    
+        if (divShowing) {
+            div.style.display = "inline-block";
+        } else {
+            div.style.display = "none";
+        }
+    });
+}

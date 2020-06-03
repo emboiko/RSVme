@@ -8,7 +8,21 @@
     <hr>
 
     <h4 class="mtop mbottom center-text"><%=rsvp.location%></h4>
-    <h4 class="mbottom center-text"><%=rsvp.date%></h4>
+    
+    <h4 class="mbottom center-text">
+        <!-- <%=rsvp.date%> -->
+    
+        <!-- Returns the day of the week, according to universal time (from 0-6) -->
+        <%= new Date(rsvp.date).getUTCMonth() + 1%>
+        /
+        <!-- (1-31) -->
+        <%= new Date(rsvp.date).getUTCDate()%>
+        /
+        <%= new Date(rsvp.date).getUTCFullYear()%>
+    
+
+    </h4>
+
     <h4 class="mbottom center-text">
         <%- new Date('1970-01-01T' + rsvp.time + 'Z').toLocaleTimeString({}, {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}); %>
         <% if (rsvp.end_time) { %>

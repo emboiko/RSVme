@@ -26,8 +26,7 @@
 #### Todo:
 
 - Delete RSVP after expiration optionally
-- Sanitize Date/Time/Location
-- Geocode location
+- Sanitize/Geocode Location
 - Prettier emails / register / delete account / createRSVP => uncomment calls
 - Private RSVP accept via password/pin
 - Password change form
