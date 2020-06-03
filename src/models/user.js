@@ -19,7 +19,12 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        trim: true
+        trim: true,
+        validate(phone) {
+            if ((phone.length !== 11) || (!/[0-9]{3}-[0-9]{3}-[0-9]{4}/.test(phone))) {
+                throw new Error("Invalid Phone");
+            }
+        }
     },
     email: {
         type: String,
@@ -39,26 +44,13 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: Buffer
-    },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
-        }
-    }]
+    }
 }, {
     timestamps: true
 });
 
-//user instance
-userSchema.methods.generateAuthToken = async function () {
-    const user = this;
-
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-    user.tokens = user.tokens.concat({ token });
-    await user.save();
-
-    return token;
+userSchema.methods.generateAuthToken = function () {
+    return jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET, {expiresIn:"2 days"});
 }
 
 userSchema.methods.toJSON = function () {
@@ -66,13 +58,11 @@ userSchema.methods.toJSON = function () {
     const userObject = user.toObject();
 
     delete userObject.password;
-    delete userObject.tokens;
     delete userObject.avatar;
 
     return userObject;
 }
 
-//User
 userSchema.statics.findByCredentials = async (email, pw) => {
     const user = await User.findOne({ email });
     if (!user) throw new Error("Unable to login.");

@@ -30,14 +30,13 @@
         <p><%=locals.user.last_name%></p>
         <input type="text" name="last_name" value="<%=user.last_name%>">
 
-        <p>Phone:</p>
-        <p><%=locals.user.phone%></p>
-        <input type="text" name="phone" value="<%=user.phone%>">
-
         <p>*Email:</p>
         <p><%=locals.user.email%></p>
         <input type="email" name="email" value="<%=user.email%>">
-
+        
+        <p>Phone <small>(Format: 123-456-7890)</small></p>
+        <p><%=locals.user.phone%></p>
+        <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%=user.phone%>">
         <button class="btn submit mtop">Update Information</button>
 
     </form>

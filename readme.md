@@ -26,7 +26,7 @@
 #### Todo:
 
 - Delete RSVP after expiration optionally
-- Sanitize Date/Time/Phone/Location
+- Sanitize Date/Time/Location
 - Geocode location
 - Prettier emails / register / delete account / createRSVP => uncomment calls
 - Private RSVP accept via password/pin
@@ -36,7 +36,5 @@
 - Non-authored RSVPs joined
 - Templates
 - Preview RSVP
-- Token lifespan
 - Tests
-- User friendly errors / more robust handlers
-- Logout/logoutAll
+- User friendly errors / more robust handlers / rerender where possible

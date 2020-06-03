@@ -34,25 +34,8 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
 
 userRouter.post("/users/logout", auth, async (req, res) => {
     try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token;
-        });
         res.clearCookie("access_token");
-
-        await req.user.save();
         res.status(202).redirect("/");
-    } catch (err) {
-        res.status(400).render("notfound", { pageTitle: "RSVme | 404" });
-    }
-});
-
-userRouter.post("/users/logoutAll", auth, async (req, res) => {
-    try {
-        req.user.tokens = [];
-        res.clearCookie("access_token");
-
-        await req.user.save();
-        res.status(200).redirect("/");
     } catch (err) {
         res.status(400).render("notfound", { pageTitle: "RSVme | 404" });
     }
@@ -98,10 +81,11 @@ userRouter.get("/users/me", auth, async (req, res) => {
 
 userRouter.patch("/users/me", auth, async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["name", "email", "password", "phone", "avatar"];
+    const allowedUpdates = ["first_name", "last_name", "email", "password", "phone", "avatar"];
     const valid = updates.every((update) => allowedUpdates.includes(update));
 
-    if (!valid) return res.status(400).render("/users/me", {
+    if (!valid) return res.status(400).render("account", {
+        error: "Invalid updates",
         user: req.user,
         pageTitle: "RSVme",
         message: "Invalid Updates"

@@ -19,8 +19,8 @@
         <input type="email" name="email" required>
         <label for="password">*Password</label>
         <input type="password" name="password" required>
-        <label for="phone">Phone</label>
-        <input type="phone" name="phone">
+        <label for="phone">Phone <small>(Format: 123-456-7890)</small></label>
+        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone">
         <button class="btn submit mtop">Submit</button>
     </form>
 </div>

@@ -13,8 +13,8 @@
         <input type="text" name="author" value="<%=user.first_name + ' ' + user.last_name%>">
         <label for="author_email">*Email</label>
         <input type="email" name="author_email" value="<%=user.email%>">
-        <label for="author_phone">Phone</label>
-        <input type="text" name="author_phone" value="<%=user.phone%>">
+        <label for="author_phone">Phone <small>(Format: 123-456-7890)</small></label>
+        <input type="tel" name="author_phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%=user.phone%>">
         <p class="mbottom mtop center-text">What:</p>
         <label for="title">*Title</label>
         <input type="text" name="title" id="title">
