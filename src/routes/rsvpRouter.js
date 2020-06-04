@@ -30,9 +30,10 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
             .toBuffer();
     }
 
-    req.body.expire = false;
     if (req.body.expire) {
         req.body.expire = true;
+    } else {
+        req.body.expire = false;
     }
 
     req.body.date = new Date(req.body.date);
