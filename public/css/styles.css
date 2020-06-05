@@ -132,6 +132,10 @@ a:hover {
     width: 900px;
 }
 
+#account-box {
+    width: 450px;
+}
+
 .center-text{
     text-align: center;
 }
@@ -278,7 +282,8 @@ textarea {
 }
 
 .aform {
-    border-top: 2px solid #000000;
+    border: 2px solid #000000;
+    border-radius: 15px;
 }
 
 .delete {
@@ -342,7 +347,7 @@ textarea {
         margin-right: auto;
     }
 
-    #box {
+    #box, #account-box {
         width: 90vw;
         margin: 0 auto;
     }

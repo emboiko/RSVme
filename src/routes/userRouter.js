@@ -33,12 +33,8 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
 });
 
 userRouter.post("/users/logout", auth, async (req, res) => {
-    try {
-        res.clearCookie("access_token");
-        res.status(202).redirect("/");
-    } catch (err) {
-        res.status(400).render("notfound", { pageTitle: "RSVme | 404" });
-    }
+    res.clearCookie("access_token");
+    res.status(202).redirect("/");
 });
 
 userRouter.get("/users", noAuth, (req, res) => {
@@ -55,7 +51,8 @@ userRouter.post("/users", noAuth, async (req, res) => {
 
         res.status(201).render("registerSuccess", {
             user,
-            pageTitle: "RSVme"
+            pageTitle: "RSVme",
+            url:process.env.URL
         });
     } catch (err) {
         const index = err.message.lastIndexOf(":");
@@ -80,6 +77,8 @@ userRouter.get("/users/me", auth, async (req, res) => {
 });
 
 userRouter.patch("/users/me", auth, async (req, res) => {
+    if (req.body.password === "") delete req.body.password;
+
     const updates = Object.keys(req.body);
     const allowedUpdates = ["first_name", "last_name", "email", "password", "phone", "avatar"];
     const valid = updates.every((update) => allowedUpdates.includes(update));
@@ -94,7 +93,11 @@ userRouter.patch("/users/me", auth, async (req, res) => {
     try {
         updates.forEach((update) => req.user[update] = req.body[update]);
         await req.user.save();
-        res.status(202).redirect("/users/me");
+        res.status(202).render("account", {
+            user: req.user,
+            message: "Updated Successfully.",
+            pageTitle: `RSVme | ${req.user.name}`
+        });
     } catch (err) {
         const index = err.message.lastIndexOf(":");
         const substr = err.message.substr(index + 1);
@@ -114,19 +117,13 @@ userRouter.get("/users/me/delete", auth, async (req, res) => {
 });
 
 userRouter.delete("/users/me", auth, async (req, res) => {
-    try {
-        await req.user.remove();
-        // cancelEmail(req.user.email, req.user.name);
-        res.status(202).render("accountDeleteSuccess", {
-            user: req.user,
-            pageTitle: "RSVme"
-        });
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404"
-        });
-    }
+    await req.user.remove();
+    // cancelEmail(req.user.email, req.user.name);
+    res.status(202).render("accountDeleteSuccess", {
+        user: req.user,
+        pageTitle: "RSVme",
+        url:process.env.URL
+    });
 });
 
 userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
@@ -166,7 +163,7 @@ userRouter.get("/users/:id/avatar", async (req, res) => {
         res.set("Content-Type", "image/png");
         res.status(200).send(user.avatar);
     } catch (err) {
-        res.status(404).render("notfound", { pageTitle: "RSVme | 404" });
+        res.status(404).send();
     }
 });
 

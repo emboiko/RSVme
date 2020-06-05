@@ -357,7 +357,8 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
             user: req.user,
             rsvp,
             pageTitle: `RSVme | ${joined === true ? "Accepted" : "Declined."}`,
-            joined
+            joined,
+            url
         });
     } catch (err) {
         res.status(400).render("notfound", {

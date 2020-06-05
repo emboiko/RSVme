@@ -19,7 +19,7 @@ app.use(rsvpRouter);
 app.use(userRouter);
 
 app.get("*", (req, res) => {
-    res.render("notfound", { pageTitle: "RSVme | 404" });
+    res.render("notfound", { pageTitle: "RSVme | 404", url:process.env.URL });
 });
 
 removeExpiredRSVPs();

@@ -1,10 +1,7 @@
 <%- include("partials/header") %>
 
-<div id="box" class="frontmatter">
+<div id="account-box" class="frontmatter">
     <h2 class="center-text mtop">Account</h2>
-    <%if (locals.error) {%>
-    <p class="error center-text mtop"><%=error%></p>
-    <%}%>
 
         <form class="logout mid center-text mtop" action="/users/logout" method="POST">
             <button class="btn mbottom">
@@ -20,24 +17,30 @@
     <button class="btn submit mtop mbottom">Upload Avatar</button>
     </form>
 
+    <%if (locals.error) {%>
+        <p class="error center-text mtop"><%=error%></p>
+    <%}%>
+    <%if (locals.message) {%>
+        <p class="center-text mtop"><%=message%></p>
+    <%}%>
+
     <form class="user-info" action="/users/me?_method=PATCH" method="POST">
 
         <p>*First Name:</p>
-        <p><%=locals.user.first_name%></p>
-        <input type="text" name="first_name" value="<%=user.first_name%>">
+        <input type="text" name="first_name" value="<%=user.first_name%>" required>
 
         <p>*Last Name:</p>
-        <p><%=locals.user.last_name%></p>
-        <input type="text" name="last_name" value="<%=user.last_name%>">
+        <input type="text" name="last_name" value="<%=user.last_name%>" required>
 
         <p>*Email:</p>
-        <p><%=locals.user.email%></p>
-        <input type="email" name="email" value="<%=user.email%>">
+        <input type="email" name="email" value="<%=user.email%>" required>
         
-        <p>Phone <small>(Format: 123-456-7890)</small></p>
-        <p><%=locals.user.phone%></p>
+        <p>New Password:</p>
+        <input type="password" name="password">
+        
+        <p>Phone<small>(Format: 123-456-7890)</small></p>
         <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%=user.phone%>">
-        <button class="btn submit mtop">Update Information</button>
+        <button class="btn submit mtop">Update</button>
 
     </form>
 

@@ -6,6 +6,10 @@
     <h2>Page not found.</h2>
 </div>
 
-<script src="/js/redirect.js"></script>
+<script>
+    setTimeout(() => {
+        window.location.href = "http://<%=url%>/";
+    }, 5000);
+</script>
 
 <%- include("partials/footer") %>

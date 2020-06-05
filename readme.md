@@ -25,17 +25,14 @@
 
 #### Todo:
 
-- Sanitize/Geocode Location
-- Prettier emails / register / delete account / createRSVP => uncomment calls 
-- Reminders
-- Non-authored RSVPs joined
-- Password change form
-- Password reset email
-- Templates/Printables
-- Preview RSVP
 - Tests
+- Prettier emails / register / delete account / createRSVP / pw reset => uncomment calls 
+- Reminders
+- Sanitize/Geocode Location
+- Non-authored RSVPs joined
 - User friendly errors / more robust handlers / rerender where possible
 - Pagination/filtering/sorting
 - Support/help/contact/footer
 - Probably overhaul the CSS & prune the HTML to be more semantic
-- Dev/prod redirect.js
+- Templates/Printables
+- Preview RSVP
