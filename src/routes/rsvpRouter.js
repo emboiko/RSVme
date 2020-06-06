@@ -64,7 +64,8 @@ rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id });
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.status(200).render("read_rsvp", {
@@ -74,7 +75,8 @@ rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -84,7 +86,8 @@ rsvpRouter.get("/rsvp/:id/joined", auth, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.status(200).render("read_rsvp_guests", {
@@ -96,7 +99,8 @@ rsvpRouter.get("/rsvp/:id/joined", auth, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -106,7 +110,8 @@ rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id })
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.status(200).render("qr", {
@@ -117,7 +122,8 @@ rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -127,7 +133,8 @@ rsvpRouter.get("/rsvp/:id/img", checkUser, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id })
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.set("Content-Type", "image/png");
@@ -135,7 +142,8 @@ rsvpRouter.get("/rsvp/:id/img", checkUser, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -145,7 +153,8 @@ rsvpRouter.get("/rsvp/:id/edit", auth, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.url
         });
 
         res.status(200).render("edit_rsvp", {
@@ -156,7 +165,8 @@ rsvpRouter.get("/rsvp/:id/edit", auth, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -189,7 +199,8 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
     const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
     if (!rsvp) return res.status(404).render("notfound", {
         user: req.user,
-        pageTitle: "RSVme | 404"
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
     });
 
     try {
@@ -211,7 +222,7 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
     } catch (err) {
         const index = err.message.lastIndexOf(":");
         let error = err.message.substr(index + 1);
-        
+
         res.status(400).render("edit_rsvp", {
             error,
             user: req.user,
@@ -227,7 +238,8 @@ rsvpRouter.get("/rsvp/:id/delete", auth, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.status(200).render("delete_rsvp", {
@@ -238,7 +250,8 @@ rsvpRouter.get("/rsvp/:id/delete", auth, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -252,14 +265,16 @@ rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
 
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
         res.status(202).redirect("/rsvps");
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -298,7 +313,8 @@ rsvpRouter.get("/rsvps", auth, async (req, res) => {
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
@@ -308,10 +324,17 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
         const rsvp = await RSVP.findOne({ id: req.params.id });
         if (!rsvp) return res.status(404).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
 
-        const invalidPin = rsvp.pin !== req.body.pin.toUpperCase();
+        let invalidPin;
+        if (rsvp.pin) {
+            invalidPin = rsvp.pin !== req.body.pin.toUpperCase();
+        } else {
+            invalidPin = false;
+        }
+
         const invalidEmail = rsvp.joined.some((party) => party.email === req.body.email);
 
         if (invalidPin || invalidEmail) return res.status(400).render("read_rsvp", {
@@ -322,7 +345,6 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
         });
 
         let joined;
-
         //todo: check if we're already declined and remove from declined
         if (req.body.accepted === "Accept") {
             rsvp.num_guests += parseInt(req.body.party_size);
@@ -358,12 +380,13 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
             rsvp,
             pageTitle: `RSVme | ${joined === true ? "Accepted" : "Declined."}`,
             joined,
-            url
+            url: process.env.URL
         });
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,
-            pageTitle: "RSVme | 404"
+            pageTitle: "RSVme | 404",
+            url: process.env.URL
         });
     }
 });
