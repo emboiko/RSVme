@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         validate(phone) {
             if (!phone) return;
-            
+
             if ((phone.length !== 12) || (!/[0-9]{3}-[0-9]{3}-[0-9]{4}/.test(phone))) {
                 throw new Error("Invalid Phone");
             }
@@ -51,8 +51,8 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
-userSchema.methods.generateAuthToken = function () {
-    return jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET, {expiresIn:"2 days"});
+userSchema.methods.generateAuthToken = function () { //todo
+    return jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET);
 }
 
 userSchema.methods.toJSON = function () {

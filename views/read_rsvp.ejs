@@ -1,6 +1,6 @@
 <%- include("partials/header") %>
 
-<div id="box" class="frontmatter">
+<div id="small-box" class="frontmatter">
     <h2 class="center-text mbottom">
         <%=rsvp.title%>
     </h2>
@@ -14,7 +14,7 @@
         <%=rsvp.location%>
     </p>
     <p class="center-text">
-        
+
         <!-- Returns the day of the week, according to universal time (from 0-6) -->
         <%= new Date(rsvp.date).getUTCMonth() + 1%>
         /
@@ -28,11 +28,11 @@
     <p class="center-text mbottom">
         <%- new Date('1970-01-01T' + rsvp.time + 'Z').toLocaleTimeString({}, {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}); %>
         <% if (rsvp.end_time) { %>
-                - 
-                <%- new Date('1970-01-01T' + rsvp.end_time + 'Z').toLocaleTimeString({}, {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}); %>
+        -
+        <%- new Date('1970-01-01T' + rsvp.end_time + 'Z').toLocaleTimeString({}, {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}); %>
         <% } %>
     </p>
-    
+
 
     <p class="center-text">
         <%=rsvp.author%>
@@ -48,7 +48,7 @@
     </p>
 
     <% if (rsvp.joined.length) { %>
-        <button class="btn submit mtop btn-guestlist">Show the guest-list</button>
+    <button class="btn submit mtop btn-guestlist">Show the guest-list</button>
     <% } %>
 
     <div class="guestlist">
@@ -67,7 +67,8 @@
 
     <form action="/rsvp/<%=rsvp.id%>" method="POST">
         <label for="party">*Party Name</label>
-        <input type="text" name="party" value="<%=locals.user ? user.first_name + ' ' + user.last_name : ''%>" placeholder="John Doe" required>
+        <input type="text" name="party" value="<%=locals.user ? user.first_name + ' ' + user.last_name : ''%>"
+            placeholder="John Doe" required>
         <label for="email">*Email</label>
         <input type="email" name="email" value="<%=locals.user ? user.email : ''%>" placeholder="jdoe@gmail.com"
             required>
@@ -75,8 +76,8 @@
         <input type="number" name="party_size" min="1" value="1" required>
 
         <% if (rsvp.pin) { %>
-            <label for="pin">*PIN</label>
-            <input class="center-text" type="text" name="pin" id="pin">
+        <label for="pin">*PIN</label>
+        <input class="center-text" type="text" name="pin" id="pin">
         <% } %>
 
         <input class="btn submit mbottom mtop" type="submit" name="accepted" value="Accept">

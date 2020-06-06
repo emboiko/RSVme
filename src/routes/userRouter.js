@@ -22,7 +22,7 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
         res.cookie("access_token", token, { httpOnly: true });
-        res.status(202).redirect("/");
+        res.redirect(202, "/");
     } catch (err) {
         res.status(400).render("login", {
             error: "Unable to login. Check your credentials and try again.",
@@ -34,7 +34,7 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
 
 userRouter.post("/users/logout", auth, async (req, res) => {
     res.clearCookie("access_token");
-    res.status(202).redirect("/");
+    res.redirect(202, "/");
 });
 
 userRouter.get("/users", noAuth, (req, res) => {
@@ -52,7 +52,7 @@ userRouter.post("/users", noAuth, async (req, res) => {
         res.status(201).render("registerSuccess", {
             user,
             pageTitle: "RSVme",
-            url:process.env.URL
+            url: process.env.URL
         });
     } catch (err) {
         const index = err.message.lastIndexOf(":");
@@ -80,7 +80,14 @@ userRouter.patch("/users/me", auth, async (req, res) => {
     if (req.body.password === "") delete req.body.password;
 
     const updates = Object.keys(req.body);
-    const allowedUpdates = ["first_name", "last_name", "email", "password", "phone", "avatar"];
+    const allowedUpdates = [
+        "first_name",
+        "last_name",
+        "email",
+        "password",
+        "phone",
+        "avatar"
+    ];
     const valid = updates.every((update) => allowedUpdates.includes(update));
 
     if (!valid) return res.status(400).render("account", {
@@ -122,7 +129,7 @@ userRouter.delete("/users/me", auth, async (req, res) => {
     res.status(202).render("accountDeleteSuccess", {
         user: req.user,
         pageTitle: "RSVme",
-        url:process.env.URL
+        url: process.env.URL
     });
 });
 
@@ -141,7 +148,7 @@ userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, r
 
     req.user.avatar = buffer;
     await req.user.save();
-    res.status(202).redirect("/users/me");
+    res.redirect(202, "/users/me");
 
 }, (err, req, res, next) => {
     const index = err.message.lastIndexOf(":");

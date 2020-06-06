@@ -8,7 +8,7 @@ const noAuth = async (req, res, next) => {
         const user = await User.findOne({ _id: decoded._id });
 
         if (user) {
-            res.status(200).redirect("/");
+            res.redirect(200, "/");
         } else {
             next();
         }

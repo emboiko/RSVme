@@ -21,18 +21,20 @@
 - [sharp](https://www.npmjs.com/package/sharp)
 - [validator](https://www.npmjs.com/package/validator)
 
+
 ---
 
 #### Todo:
 
-- Tests
+- A lot more tests + mocks + fixtures
 - Prettier emails / register / delete account / createRSVP / pw reset => uncomment calls 
 - Reminders
 - Sanitize/Geocode Location
 - Non-authored RSVPs joined
-- User friendly errors / more robust handlers / rerender where possible
+- User friendly errors / more robust handlers / rerender where possible, server errors shouldn't render 404
 - Pagination/filtering/sorting
 - Support/help/contact/footer
 - Probably overhaul the CSS & prune the HTML to be more semantic
 - Templates/Printables
 - Preview RSVP
+- Mobile header should be on a toggle

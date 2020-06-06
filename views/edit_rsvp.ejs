@@ -30,13 +30,15 @@
         <input type="time" name="time" value="<%=rsvp.time%>">
         <label for="end_time">End Time</label>
         <input type="time" name="end_time" value="<%=rsvp.end_time%>">
-        <p class="mbottom center-text">PIN</p>
+        <p class="mbottom mtop center-text">Protect this RSVP with an optional PIN</p>
+        <small class="center-text mbottom">Don't forget to provide this to your guests!</small>
         <input class="center-text" type="text" name="pin" value="<%=rsvp.pin%>" id="pin">
-        <label class="center-text mbottom" for="expire">Delete this RSVP after its date has passed. (Usually after about 24 hours)</label>
-        <input class="expire" type="checkbox" name="expire" value="1" <%=rsvp.expire ? 'checked' : ''%> >
-    
+        <label class="center-text mbottom" for="expire">Delete this RSVP after its date has passed.</label>
+        <small class="center-text mbottom">This can take up to 24 hours.</small>
+        <input class="expire" type="checkbox" name="expire" value="1" <%=rsvp.expire ? 'checked' : ''%>>
+
         <% if (rsvp.expire) 'checked' %>
-        
+
         <button class="btn submit mtop mbottom">Submit</button>
     </form>
 </div>
@@ -48,7 +50,7 @@
     const year = "<%=rsvp.date.getFullYear()%>";
 
     let month = "<%=rsvp.date.getMonth() + 1%>";
-    if (parseInt(month) < 10) month = "0" + month; 
+    if (parseInt(month) < 10) month = "0" + month;
 
     let day = "<%=rsvp.date.getUTCDate()%>";
     if (parseInt(day) < 10) day = "0" + day;

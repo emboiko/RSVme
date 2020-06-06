@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
     try {
         const token = req.cookies.access_token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded._id});
+        const user = await User.findOne({ _id: decoded._id });
 
         if (!user) throw new Error();
 
@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
         req.user = user;
         next();
     } catch (err) {
-        res.status(401).redirect("/users/login");
+        res.redirect(401, "/users/login");
     }
 }
 
