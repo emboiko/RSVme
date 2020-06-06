@@ -17,9 +17,11 @@ const user2 = {
 }
 
 let token1;
+let token2;
 
 beforeAll(async () => {
     await User.deleteMany();
+
     await new User(user1).save();
     await new User(user2).save();
 
@@ -29,30 +31,42 @@ beforeAll(async () => {
     });
     token1 = res1.headers["set-cookie"][0].replace("access_token=", "");
     token1 = token1.slice(0, token1.indexOf(";"));
+
+    const res2 = await request(app).post("/users/login").send({
+        email: user2.email,
+        password: user2.password
+    });
+    token2 = res2.headers["set-cookie"][0].replace("access_token=", "");
+    token2 = token2.slice(0, token2.indexOf(";"));
 });
 
 test("Should register a new user", async () => {
-    await request(app).post("/users").send({
+    const res = await request(app).post("/users").send({
         first_name: "Foo",
         last_name: "Bar",
-        email: "foo@bar.com",
-        password: "test_!pass!_555"
-    }).expect(201);
+        email: "Foo@Bar.com",
+        password: "foobarbinbaz"
+    });
+
+    expect(res.text).toContain("foo@bar.com");
+
+    const user = await User.findOne({ email: "foo@bar.com" });
+    expect(user.first_name).toBe("Foo");
 });
 
 test("Should not register a new user with an email in use", async () => {
     await request(app).post("/users").send({
         first_name: "Foo",
         last_name: "Bar",
-        email: "mike@aol.com",
-        password: "test_!pass!_555"
+        email: user1.email,
+        password: "foobarbinbaz"
     }).expect(400);
 });
 
 test("Should hash a user's password upon registration", async () => {
     await request(app).post("/users").send({
-        first_name: "Bin",
-        last_name: "Baz",
+        first_name: "Foo",
+        last_name: "Bar",
         email: "bin@baz.com",
         password: "test_!pass!_555"
     }).expect(201);
@@ -65,7 +79,7 @@ test("Should login an existing user", async () => {
     await request(app).post("/users/login").send({
         email: user1.email,
         password: user1.password
-    }).expect(202);
+    });
 });
 
 test("Should not login a non-existing user", async () => {
@@ -84,19 +98,12 @@ test("Should not login an existing user with the wrong PW", async () => {
 
 /////////////////////////////////
 
-test("Should not let an unauthenticated user post to logout", async () => {
-    await request(app)
-        .post("/users/logout")
-        .send()
-        .expect(401);
-});
-
 test("Should log a user out", async () => {
-    await request(app)
+    const res = await request(app)
         .post("/users/logout")
         .set("Cookie", [`access_token=${token1}`])
         .send()
-        .expect(202);
+        .expect(302);
 });
 
 test("Should get profile for authenticated user", async () => {
@@ -115,7 +122,7 @@ test("Should not get profile for unauthenticated user", async () => {
     await request(app)
         .get("/users/me")
         .send()
-        .expect(401);
+        .expect(302);
 });
 
 test("Should update profile for authenticated user", async () => {
@@ -147,7 +154,7 @@ test("Should not update profile for unauthenticated user", async () => {
             phone: "555-555-5555",
             password: "a_new_pass"
         })
-        .expect(401);
+        .expect(302);
 });
 
 test("Should hash a user's updated password", async () => {
@@ -178,5 +185,5 @@ test("Should not delete an unauthenticated user's account", async () => {
     await request(app)
         .delete("/users/me")
         .send()
-        .expect(401);
+        .expect(302);
 });

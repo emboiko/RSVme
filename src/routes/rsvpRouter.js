@@ -49,7 +49,7 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
     try {
         await rsvp.save();
         //creationEmail() //todo
-        res.status(201).redirect(`/rsvp/${id}`);
+        res.redirect(`/rsvp/${id}`);
     } catch (err) {
         res.status(400).render("create_rsvp", {
             user: req.user,
@@ -218,7 +218,7 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
         if (typeof req.body.expire === "undefined") rsvp.expire = false;
 
         await rsvp.save();
-        res.status(202).redirect(`/rsvp/${rsvp.id}`);
+        res.redirect(`/rsvp/${rsvp.id}`);
     } catch (err) {
         const index = err.message.lastIndexOf(":");
         let error = err.message.substr(index + 1);
@@ -269,7 +269,7 @@ rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
             url: process.env.URL
         });
 
-        res.status(202).redirect("/rsvps");
+        res.redirect("/rsvps");
     } catch (err) {
         res.status(400).render("notfound", {
             user: req.user,

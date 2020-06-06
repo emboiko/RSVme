@@ -22,7 +22,7 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
         res.cookie("access_token", token, { httpOnly: true });
-        res.redirect(202, "/");
+        res.redirect("/");
     } catch (err) {
         res.status(400).render("login", {
             error: "Unable to login. Check your credentials and try again.",
@@ -34,7 +34,7 @@ userRouter.post("/users/login", noAuth, async (req, res) => {
 
 userRouter.post("/users/logout", auth, async (req, res) => {
     res.clearCookie("access_token");
-    res.redirect(202, "/");
+    res.redirect("/");
 });
 
 userRouter.get("/users", noAuth, (req, res) => {
@@ -148,7 +148,7 @@ userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, r
 
     req.user.avatar = buffer;
     await req.user.save();
-    res.redirect(202, "/users/me");
+    res.redirect("/users/me");
 
 }, (err, req, res, next) => {
     const index = err.message.lastIndexOf(":");
