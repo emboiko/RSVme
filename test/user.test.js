@@ -7,14 +7,14 @@ const user1 = {
     last_name: "Johnson",
     email: "Mike@aol.com",
     password: "43my_pass!"
-}
+};
 
 const user2 = {
     first_name: "Thomas",
     last_name: "White",
     email: "tomwhite@comcast.net",
     password: "foobarbinbaz"
-}
+};
 
 let token1;
 let token2;
@@ -45,6 +45,7 @@ test("Should register a new user", async () => {
         first_name: "Foo",
         last_name: "Bar",
         email: "Foo@Bar.com",
+        phone: "555-555-5555",
         password: "foobarbinbaz"
     });
 
@@ -66,10 +67,57 @@ test("Should not register a new user with an email in use", async () => {
     expect(user).toBeNull();
 });
 
+test("Should not register a new user with an invalid email", async () => {
+    await request(app).post("/users").send({
+        first_name: "Bin",
+        last_name: "Baz",
+        email: "fragmented@",
+        password: "foobarbinbaz",
+    }).expect(400);
+
+    const user = await User.findOne({ first_name: "Bin" });
+    expect(user).toBeNull();
+});
+
+test("Should not register a new user with an invalid phone number", async () => {
+    await request(app).post("/users").send({
+        first_name: "Bin",
+        last_name: "Baz",
+        email: user1.email,
+        password: "foobarbinbaz",
+        phone: "          123-456   "
+    }).expect(400);
+
+    const user = await User.findOne({ first_name: "Bin" });
+    expect(user).toBeNull();
+});
+
 test("Should not register a new user without an email", async () => {
     await request(app).post("/users").send({
         first_name: "Bin",
         last_name: "Baz",
+        password: "foobarbinbaz"
+    }).expect(400);
+
+    const user = await User.findOne({ first_name: "Bin" });
+    expect(user).toBeNull();
+});
+
+test("Should not register a new user without a first name", async () => {
+    await request(app).post("/users").send({
+        last_name: "Baz",
+        email: "bin@baz.com",
+        password: "foobarbinbaz"
+    }).expect(400);
+
+    const user = await User.findOne({ first_name: "Baz" });
+    expect(user).toBeNull();
+});
+
+test("Should not register a new user without a last name", async () => {
+    await request(app).post("/users").send({
+        first_name: "Bin",
+        email: "bin@baz.com",
         password: "foobarbinbaz"
     }).expect(400);
 
@@ -90,10 +138,12 @@ test("Should hash a user's password upon registration", async () => {
 });
 
 test("Should login an existing user", async () => {
-    await request(app).post("/users/login").send({
+    const res = await request(app).post("/users/login").send({
         email: user1.email,
         password: user1.password
     });
+
+    expect(res.headers["set-cookie"]).not.toBeUndefined();
 });
 
 test("Should not login a non-existing user", async () => {
@@ -107,6 +157,12 @@ test("Should not login an existing user with the wrong PW", async () => {
     await request(app).post("/users/login").send({
         email: user1.email,
         password: user1.password + "foo"
+    }).expect(400);
+});
+
+test("Should not login an existing user without PW", async () => {
+    await request(app).post("/users/login").send({
+        email: user1.email,
     }).expect(400);
 });
 
@@ -225,7 +281,7 @@ test("Should not update a phone number with one of incorrect length", async () =
         .expect(400);
 });
 
-test("Should allow a phone number to be removed", async () => {
+test("Should allow a phone number to be removed/set to nothing", async () => {
     await request(app)
         .patch("/users/me")
         .set("Cookie", [`access_token=${token1}`])

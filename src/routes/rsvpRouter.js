@@ -60,115 +60,74 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
 });
 
 rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id });
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id });
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
 
-        res.status(200).render("read_rsvp", {
-            user: req.user, rsvp,
-            pageTitle: `RSVme | ${rsvp.title}`
-        });
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.status(200).render("read_rsvp", {
+        user: req.user, rsvp,
+        pageTitle: `RSVme | ${rsvp.title}`
+    });
 });
 
 rsvpRouter.get("/rsvp/:id/joined", auth, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
 
-        res.status(200).render("read_rsvp_guests", {
-            user: req.user,
-            rsvp,
-            pageTitle: "RSVme | Guest-list"
-        });
-
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.status(200).render("read_rsvp_guests", {
+        user: req.user,
+        rsvp,
+        pageTitle: "RSVme | Guest-list"
+    });
 });
 
 rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id })
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id })
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
 
-        res.status(200).render("qr", {
-            user: req.user,
-            rsvp,
-            pageTitle: `RSVme | ${rsvp.title}`
-        });
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.status(200).render("qr", {
+        user: req.user,
+        rsvp,
+        pageTitle: `RSVme | ${rsvp.title}`
+    });
 });
 
 rsvpRouter.get("/rsvp/:id/img", checkUser, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id })
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id })
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
 
-        res.set("Content-Type", "image/png");
-        res.status(200).send(rsvp.img);
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.set("Content-Type", "image/png");
+    res.status(200).send(rsvp.img);
 });
 
 rsvpRouter.get("/rsvp/:id/edit", auth, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.url
-        });
+    const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.url
+    });
 
-        res.status(200).render("edit_rsvp", {
-            user: req.user,
-            rsvp,
-            pageTitle: `RSVme | Edit ${rsvp.title}`
-        });
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.status(200).render("edit_rsvp", {
+        user: req.user,
+        rsvp,
+        pageTitle: `RSVme | Edit ${rsvp.title}`
+    });
 });
 
 rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) => {

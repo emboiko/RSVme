@@ -92,12 +92,9 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.pre("remove", async function (next) {
-    const user = this;
-    await RSVP.deleteMany({ owner: user._id });
-
+    await RSVP.deleteMany({ owner: this._id });
     next();
 });
 
 const User = mongoose.model("user", userSchema);
-
 module.exports = User;

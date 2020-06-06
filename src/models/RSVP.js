@@ -67,7 +67,7 @@ const RSVP_Schema = new mongoose.Schema({
         trim: true,
         validate(time) {
             if (!time) return;
-            
+
             if (!/\d{2}:\d{2}/.test(time)) {
                 throw new Error("Invalid End Time");
             }
@@ -80,6 +80,11 @@ const RSVP_Schema = new mongoose.Schema({
     img: {
         type: Buffer
     },
+    pin: {
+        type: String,
+        uppercase: true,
+        trim: true
+    },
     qr: {
         type: String,
         required: true
@@ -87,11 +92,6 @@ const RSVP_Schema = new mongoose.Schema({
     id: {
         type: String,
         required: true
-    },
-    pin: {
-        type: String,
-        uppercase: true,
-        trim: true
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
@@ -107,7 +107,7 @@ const RSVP_Schema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        party_size:{
+        party_size: {
             type: Number,
             required: true
         },
@@ -139,5 +139,4 @@ const RSVP_Schema = new mongoose.Schema({
 });
 
 const RSVP = mongoose.model("RSVP", RSVP_Schema);
-
 module.exports = RSVP;
