@@ -76,11 +76,25 @@ header a {
 
 .user-box {
     position: absolute;
-    right: 5px;
+    top: 8px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user {
+    max-width: 140px;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .midlinks-box {
-    margin-top: 30px;
+    margin-top: 15px;
+    font-size: 1.1em;
 }
 
 .btn {
@@ -175,6 +189,7 @@ a:hover {
     border-radius: 15px;
     box-shadow: #555555 5px 5px 10px 10px;
     margin-bottom: 50px;
+    background-color: #dddddd;
 }
 
 .rsvp-img-upload {
@@ -371,6 +386,10 @@ textarea {
     #main-header {
         padding: 0;
         display: none;
+    }
+
+    .bordered {
+        background-color: initial;
     }
 
     .minheader {
