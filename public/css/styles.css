@@ -159,6 +159,17 @@ a:hover {
     text-align: center;
 }
 
+.htoggle {
+    display: none;
+    padding: 5px;
+    z-index: 99;
+}
+
+.menu {
+    width: 50px;
+    /* transform: rotate(90); */
+}
+
 .bordered {
     border: 2px solid #888888;
     border-radius: 15px;
@@ -357,12 +368,26 @@ textarea {
 /*******************************************************/
 
 @media screen and (max-width: 768px) {
-    .header {
+    #main-header {
         padding: 0;
+        display: none;
+    }
+
+    .minheader {
+        margin-bottom: 10px;
+    }
+
+    .htoggle {
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        padding: 0px;
     }
 
     .home, .user-box{
         position: static;
+        margin-top: 10px;
     }
 
     .midlinks-box {
@@ -373,7 +398,7 @@ textarea {
     }
 
     .midlinks-box a {
-        margin-top: 10px;
+        margin: 5px auto;
     }
 
     #home-box {
@@ -388,11 +413,18 @@ textarea {
     }
 
     .frontmatter {
-        margin-top: 25px;
+        padding-top: 35px;
+    }
+
+    .bordered {
+        border: none;
+        box-shadow: none;
     }
 
     .favicon {
-        display: none;
+        position: static;
+        width: 50px;
+        margin: 0 auto;
     } 
 
     .user-box {
