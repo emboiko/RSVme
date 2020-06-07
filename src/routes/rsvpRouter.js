@@ -193,49 +193,37 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
 });
 
 rsvpRouter.get("/rsvp/:id/delete", auth, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOne({ id: req.params.id, owner: req.user._id });
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    const rsvp = await RSVP.findOne({
+        id: req.params.id,
+        owner: req.user._id
+    });
 
-        res.status(200).render("delete_rsvp", {
-            user: req.user,
-            rsvp,
-            pageTitle: `RSVme | Delete ${rsvp.title}`
-        });
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
+
+    res.status(200).render("delete_rsvp", {
+        user: req.user,
+        rsvp,
+        pageTitle: `RSVme | Delete ${rsvp.title}`
+    });
 });
 
 rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
-    try {
-        const rsvp = await RSVP.findOneAndDelete({
-            id: req.params.id,
-            owner: req.user._id
-        });
+    const rsvp = await RSVP.findOneAndDelete({
+        id: req.params.id,
+        owner: req.user._id
+    });
 
-        if (!rsvp) return res.status(404).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
+    if (!rsvp) return res.status(404).render("notfound", {
+        user: req.user,
+        pageTitle: "RSVme | 404",
+        url: process.env.URL
+    });
 
-        res.redirect("/rsvps");
-    } catch (err) {
-        res.status(400).render("notfound", {
-            user: req.user,
-            pageTitle: "RSVme | 404",
-            url: process.env.URL
-        });
-    }
+    res.redirect("/rsvps");
 });
 
 rsvpRouter.get("/rsvps", auth, async (req, res) => {
@@ -314,17 +302,17 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
             });
             joined = true;
 
-            //todo: probably include the party name, QR + RSVP ID in the email, too.
-            // acceptEmail(
-            //     req.body.email,
-            //     rsvp.author_email,
-            //     rsvp.author_phone,
-            //     rsvp.title,
-            //     rsvp.description,
-            //     rsvp.location,
-            //     rsvp.date,
-            //     rsvp.time,
-            // );
+            acceptEmail(
+                req.body.email,
+                rsvp.author_email,
+                rsvp.author_phone,
+                rsvp.title,
+                rsvp.description,
+                rsvp.location,
+                rsvp.date,
+                rsvp.time,
+                rsvp.end_time,
+            );
         } else {
             rsvp.declined = rsvp.declined.concat({
                 party: req.body.party,

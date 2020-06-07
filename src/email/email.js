@@ -1,4 +1,5 @@
 const sgMail = require('@sendgrid/mail');
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const acceptEmail = (
@@ -10,16 +11,27 @@ const acceptEmail = (
     rsvp_location,
     rsvp_date,
     rsvp_time,
+    rsvp_end_time,
 ) => {
     let msg = "";
 
     msg += `${rsvp_description}\n\n`;
-    msg += `${rsvp_location}\n`;
-    msg += `${rsvp_date}\n`;
-    msg += `${rsvp_time}\n`;
+    msg += `${rsvp_location}\n\n`;
+    msg += (rsvp_date.getUTCMonth() + 1) + "/";
+    msg += rsvp_date.getUTCDate() + "/";
+    msg += rsvp_date.getUTCFullYear() + "\n";
+    msg += new Date('1970-01-01T' + rsvp_time + 'Z').toLocaleTimeString({}, { timeZone: 'UTC', hour12: true, hour: 'numeric', minute: 'numeric' });
+
+    if (rsvp_end_time) {
+        msg += " - ";
+        msg += new Date('1970-01-01T' + rsvp_end_time + 'Z').toLocaleTimeString({}, { timeZone: 'UTC', hour12: true, hour: 'numeric', minute: 'numeric' });
+        msg += "\n\n";
+    } else {
+        msg += "\n\n"
+    }
 
     if (rsvp_author_phone) {
-        msg += `\nPhone: ${rsvp_author_phone}\n`;
+        msg += `${rsvp_author_phone}\n`;
     }
 
     sgMail.send({
@@ -28,6 +40,10 @@ const acceptEmail = (
         subject: `RSVP for ${rsvp_title} registered.`,
         text: msg
     });
+}
+
+const creationEmail = () => {
+
 }
 
 const welcomeEmail = (email, name) => {
@@ -44,12 +60,8 @@ const cancelEmail = (email, name) => {
         to: email,
         from: "admin@RSVme.com",
         subject: `Sorry to see you go, ${name}`,
-        text: "Your account has been successfully deleted. We hope to see you back sometime soon."
+        text: "Your account and any RSVPs you have created have been successfully deleted. We hope to see you back sometime soon."
     });
 }
 
-const creationEmail = () => {
-    //todo
-}
-
-module.exports = {welcomeEmail, cancelEmail, acceptEmail, creationEmail};
+module.exports = { welcomeEmail, cancelEmail, acceptEmail, creationEmail };
