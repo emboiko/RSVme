@@ -52,8 +52,23 @@
 
     <% }); %>
 
-
 </div>
+
+
+<% if (rsvp.declined.length) { %>
+<div id="box" class="frontmatter bordered">
+    <h2 class="mtop mbottom center-text">Declined</h2>
+    <% rsvp.declined.forEach((party) => { %>
+    <hr>
+    <div class="dg-party mtop mbottom">
+        <p class="dg"><%=party.party%></p>
+        <p class="dg"><%=party.party_size%></p>
+        <p class="dg"><a href="mailto:<%=party.email%>"><%=party.email%></a></p>
+    </div>
+    <% }) %>
+</div>
+<% } %>
+
 
 
 <%- include("partials/footer") %>
