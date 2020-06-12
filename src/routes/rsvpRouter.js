@@ -227,14 +227,6 @@ rsvpRouter.delete("/rsvp/:id", auth, async (req, res) => {
 });
 
 rsvpRouter.get("/rsvps", auth, async (req, res) => {
-    // todo: more optional filtering
-    // GET /rsvps?completed=true
-    // const match = {};
-    // if (req.query.completed) {
-    //     match.completed = req.query.completed === "true";
-    // }
-
-    // GET /rsvps?sortBy=createdAt:desc
     const sort = {};
     if (req.query.sortBy) {
         const parts = req.query.sortBy.split(":");
@@ -242,20 +234,21 @@ rsvpRouter.get("/rsvps", auth, async (req, res) => {
     }
 
     try {
-        await req.user.populate({ //todo
+        await req.user.populate({
             path: "rsvps",
-            //match
             options: {
-                // GET /rsvps?sortBy=10&skip=20
                 limit: parseInt(req.query.limit),
                 skip: parseInt(req.query.skip),
                 sort
             }
-        }).execPopulate()
+        }).execPopulate();
+
         res.status(200).render("list_rsvp", {
             user: req.user,
             rsvps: req.user.rsvps,
-            pageTitle: "RSVme | My RSVPs"
+            pageTitle: "RSVme | My RSVPs",
+            url: process.env.URL,
+            sort
         });
     } catch (err) {
         res.status(400).render("notfound", {

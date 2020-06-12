@@ -12,12 +12,28 @@
     </p>
     <% } %>
 
+    <div class="dropdowns">
+        <label for="sort">Sort by</label>
+        <select name="sort">
+            <option value="createdAt">Created</option>
+            <option value="num_guests">Registered Guests</option>
+            <option value="date">Date</option>
+            <option value="title">Alphabetical</option>
+        </select>
+        <label for="order">Order</label>
+        <select name="order">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+        <button class="btn btn-sort">Sort</button>
+    </div>
+
     <div class="rsvp-list-box">
 
         <ul class="rsvp-list">
             <% rsvps.forEach((rsvp) => { %>
             <hr>
-            <li>
+            <li class="mtop mbottom">
                 <a class="rsvp-list-title" href="/rsvp/<%=rsvp.id%>"> <%=rsvp.title%> </a>
                 <div class="rsvp-list-actions">
                     <a href="/rsvp/<%=rsvp.id%>/joined">Guest-List</a>
@@ -26,7 +42,7 @@
                     |
                     <a href="/rsvp/<%=rsvp.id%>/edit">Edit</a>
                     |
-                    <a href="/rsvp/<%=rsvp.id%>/delete">Delete</a>
+                    <a class="error" href="/rsvp/<%=rsvp.id%>/delete">Delete</a>
                 </div>
             </li>
             <% }); %>
@@ -35,5 +51,30 @@
     </div>
 
 </div>
+
+<script>
+    const sortSelect = document.querySelector("select[name='sort']");
+    const orderSelect = document.querySelector("select[name='order']");
+    const key = "<%=Object.keys(sort)%>";
+    const val = "<%=Object.values(sort)%>";
+
+    if (key.length) {
+        sortSelect.value = key;
+        orderSelect.value = val === "1" ? "asc" : "desc";
+    }
+
+    document.querySelector(".btn-sort").addEventListener("click", (e) => {
+        const sortValue = sortSelect.value;
+        const orderValue = orderSelect.value;
+
+        let urlString = "";
+        if ("<%=url%>".startsWith("localhost")) urlString += "http://";
+        urlString += "<%=url%>/rsvps?";
+        urlString += `sortBy=${sortValue}`;
+        urlString += `:${orderValue}`;
+
+        this.location.href = urlString;
+    });
+</script>
 
 <%- include("partials/footer") %>

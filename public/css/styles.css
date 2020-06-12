@@ -317,6 +317,15 @@ form label {
     width: 325px;
 }
 
+.dropdowns {
+    /* margin-left: 15px; */
+    margin: 0 auto;
+}
+
+.btn-sort {
+    margin-left: 5px;
+}
+
 textarea {
     resize: vertical;
     height: 100px;
@@ -509,6 +518,16 @@ textarea {
         margin-top: 10px;
         width: 320px;
         text-align: center;
+    }
+
+    .dropdowns {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-sort {
+        margin-top: 10px;
     }
 
     #qr {
