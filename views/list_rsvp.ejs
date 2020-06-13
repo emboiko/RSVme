@@ -2,7 +2,7 @@
 
 <div id="box" class="frontmatter bordered">
 
-    <h2 class="center-text mbottom">My RSVPs</h2>
+    <h2 class="center-text mbottom mtop">My RSVPs</h2>
     <img class="icon mbottom" src="/img/paper_airplane.png" alt="paper_airplane">
 
     <% if (!rsvps.length) { %>
@@ -10,8 +10,7 @@
     <p class="center-text mtop">
         Create a <a href="/rsvp">new RSVP</a>
     </p>
-    <% } %>
-
+    <% } else { %>
     <div class="dropdowns">
         <label for="sort">Sort by</label>
         <select name="sort">
@@ -27,6 +26,8 @@
         </select>
         <button class="btn btn-sort">Sort</button>
     </div>
+    <% } %>
+
 
     <div class="rsvp-list-box">
 

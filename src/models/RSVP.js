@@ -48,7 +48,27 @@ const RSVP_Schema = new mongoose.Schema({
             today.setUTCMilliseconds(0);
 
             if (date < today) {
-                throw new Error("Date has already passed.");
+                throw new Error("RSVP Date has already passed.");
+            }
+        }
+    },
+    rsvp_by: {
+        type: Date,
+        required: true,
+        trim: true,
+        validate(rsvp_by) {
+            const today = new Date(Date.now());
+            today.setUTCHours(0);
+            today.setUTCMinutes(0);
+            today.setUTCSeconds(0);
+            today.setUTCMilliseconds(0);
+
+            if (rsvp_by < today) {
+                throw new Error("RSVP By Date has already passed.");
+            }
+
+            if (rsvp_by > this.date) {
+                throw new Error("RSVP By Date must come before RSVP Date.");
             }
         }
     },

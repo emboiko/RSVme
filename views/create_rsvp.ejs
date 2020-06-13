@@ -8,42 +8,51 @@
         <h2 class="mbottom center-text">New RSVP</h2>
         <img class="icon mbottom" src="/img/paper_airplane.png" alt="paper_airplane">
         <hr class="mbottom">
+
         <div id="small-box" class="subcontent mbottom">
+
             <p class="mbottom mtop center-text bolded">Who:</p>
             <label for="author">*Author/Host</label>
-            <input type="text" name="author" value="<%=user.first_name + ' ' + user.last_name%>">
+            <input type="text" name="author" value="<%=user.first_name + ' ' + user.last_name%>" required>
             <label for="author_email">*Email</label>
-            <input type="email" name="author_email" value="<%=user.email%>">
+            <input type="email" name="author_email" value="<%=user.email%>" required>
             <label for="author_phone">Phone <small>(Format: 123-456-7890)</small></label>
             <input type="tel" name="author_phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<%=user.phone%>">
+
             <p class="mbottom mtop center-text bolded">What:</p>
             <label for="title">*Title</label>
-            <input type="text" name="title" id="title">
+            <input type="text" name="title" id="title" required>
             <label for="description">Description</label>
             <textarea class="mbottom" type="text" name="description"></textarea>
             <p class="mbottom mtop center-text">Include an image (jpg/png)</p>
             <input class="finput rsvp-img-upload" type="file" accept=".jpeg,.jpg,.png" name="rsvp-img">
+
             <p class="mtop center-text bolded">Where:</p>
             <label for="location">*Location</label>
-            <input type="text" name="location">
+            <input type="text" name="location" required>
+
             <p class="mbottom mtop center-text bolded">When:</p>
             <div id="tiny-box" class="subcontent">
                 <label for="date">*Date</label>
-                <input type="date" name="date">
+                <input type="date" name="date" required>
+                <label for="rsvp_by">*RSVP By Date</label>
+                <input type="date" name="rsvp_by" required>
                 <label for="time">*Start Time</label>
-                <input type="time" name="time">
+                <input type="time" name="time" required>
                 <label for="end_time">End Time</label>
                 <input type="time" name="end_time">
             </div>
+
             <p class="mbottom mtop center-text">Protect this RSVP with an optional PIN</p>
             <small class="center-text mbottom">Don't forget to provide this to your guests!</small>
             <div id="tiny-box" class="subcontent">
                 <input class="center-text" type="text" name="pin" id="pin">
             </div>
+
             <label class="center-text mbottom" for="expire">Delete this RSVP after its date has passed.</label>
-            <small class="center-text mbottom">This can take up to 24 hours.</small>
             <input class="expire" type="checkbox" name="expire">
         </div>
+
         <button class="btn submit mtop mbottom">Submit</button>
     </form>
 </div>

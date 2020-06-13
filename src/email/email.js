@@ -44,10 +44,6 @@ const acceptEmail = (
     });
 }
 
-const creationEmail = () => {
-    //todo
-}
-
 const welcomeEmail = (email, name) => {
     sgMail.send({
         to: email,
@@ -66,4 +62,4 @@ const cancelEmail = (email, name) => {
     });
 }
 
-module.exports = { welcomeEmail, cancelEmail, acceptEmail, creationEmail };
+module.exports = { welcomeEmail, cancelEmail, acceptEmail };

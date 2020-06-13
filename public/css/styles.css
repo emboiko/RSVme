@@ -89,6 +89,14 @@ header a {
     font-weight: bold;
 }
 
+.italic {
+    font-style: italic;
+}
+
+.padded {
+    padding: 15px;
+}
+
 .user {
     max-width: 140px;
     margin-right: 10px;
@@ -205,7 +213,7 @@ a:hover {
 }
 
 .rsvp-img {
-    width: 400px;
+    width: 300px;
     display: block;
     margin: 10px auto 0 auto;
     border-radius: 20px;

@@ -1,28 +1,26 @@
 <%- include("partials/header") %>
 
-<div id="small-box" class="frontmatter bordered">
-    <h2 class="center-text mbottom">
+<div id="med-box" class="frontmatter bordered">
+    <h2 class="center-text mbottom mtop">
         <%=rsvp.title%>
     </h2>
+
     <% if (rsvp.img) { %>
     <img class="rsvp-img" src="/rsvp/<%=rsvp.id%>/img" alt="rsvp-image">
     <% } %>
-    <p class="center-text mtop mbottom">
+    <p class="center-text mtop mbottom padded">
         <%=rsvp.description%>
     </p>
     <p class="center-text">
         <%=rsvp.location%>
     </p>
-    <p class="center-text">
 
-        <!-- Returns the day of the week, according to universal time (from 0-6) -->
+    <p class="center-text">
         <%= new Date(rsvp.date).getUTCMonth() + 1%>
         /
-        <!-- (1-31) -->
         <%= new Date(rsvp.date).getUTCDate()%>
         /
         <%= new Date(rsvp.date).getUTCFullYear()%>
-
     </p>
 
     <p class="center-text mbottom">
@@ -33,6 +31,14 @@
         <% } %>
     </p>
 
+    <small class="center-text mtop mbottom italic">
+        RSVP by
+        <%= new Date(rsvp.rsvp_by).getUTCMonth() + 1%>
+        /
+        <%= new Date(rsvp.rsvp_by).getUTCDate()%>
+        /
+        <%= new Date(rsvp.rsvp_by).getUTCFullYear()%>
+    </small>
 
     <p class="center-text">
         <%=rsvp.author%>
@@ -59,7 +65,6 @@
         </ul>
     </div>
     <hr class="mtop">
-    <h2 class="center-text mtop">RSVP</h2>
 
     <% if (locals.error) { %>
     <p class="center-text mbottom error"><%=error%></p>

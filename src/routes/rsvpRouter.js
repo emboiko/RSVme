@@ -6,7 +6,7 @@ const auth = require("../middleware/auth");
 const checkUser = require("../middleware/checkUser");
 const upload = require("../middleware/multer");
 const RSVP = require("../models/RSVP");
-const { acceptEmail, creationEmail } = require("../email/email");
+const { acceptEmail } = require("../email/email");
 
 const rsvpRouter = new express.Router();
 
@@ -37,6 +37,7 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
     }
 
     req.body.date = new Date(req.body.date);
+    req.body.rsvp_by = new Date(req.body.rsvp_by);
 
     const rsvp = new RSVP({
         ...req.body,
@@ -48,7 +49,6 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
 
     try {
         await rsvp.save();
-        //creationEmail() //todo
         res.redirect(`/rsvp/${id}`);
     } catch (err) {
         res.status(400).render("create_rsvp", {
@@ -140,6 +140,7 @@ rsvpRouter.patch("/rsvp/:id", auth, upload.single("rsvp-img"), async (req, res) 
         "description",
         "location",
         "date",
+        "rsvp_by",
         "time",
         "end_time",
         "rsvp-img",
@@ -267,24 +268,37 @@ rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
             url: process.env.URL
         });
 
+        let error;
+
         let invalidPin;
         if (rsvp.pin) {
             invalidPin = rsvp.pin !== req.body.pin.toUpperCase();
+            if (invalidPin) error = "Invalid PIN";
         } else {
             invalidPin = false;
         }
 
         const invalidEmail = rsvp.joined.some((party) => party.email === req.body.email);
+        if (invalidEmail) error = "Invalid Email";
 
-        if (invalidPin || invalidEmail) return res.status(400).render("read_rsvp", {
-            user: req.user,
-            rsvp,
-            pageTitle: `RSVme | ${rsvp.title}`,
-            "error": invalidPin ? "Invalid Pin" : "Email is already registered with this RSVP"
-        });
+        const today = new Date(Date.now());
+        today.setUTCHours(0);
+        today.setUTCMinutes(0);
+        today.setUTCSeconds(0);
+        today.setUTCMilliseconds(0);
+        let invalidDate = today > rsvp.rsvp_by;
+        if (invalidDate) error = "RSVP By Date has already passed."
+
+        if (invalidPin || invalidEmail || invalidDate) {
+            return res.status(400).render("read_rsvp", {
+                user: req.user,
+                rsvp,
+                pageTitle: `RSVme | ${rsvp.title}`,
+                error
+            });
+        }
 
         let joined;
-        //todo: check if we're already declined and remove from declined
         if (req.body.accepted === "Accept") {
             rsvp.num_guests += parseInt(req.body.party_size);
             rsvp.joined = rsvp.joined.concat({
