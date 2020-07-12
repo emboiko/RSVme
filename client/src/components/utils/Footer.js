@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
+import logo from "../../img/logo.png";
 
 export default class Footer extends Component {
   render() {
@@ -8,7 +9,9 @@ export default class Footer extends Component {
         <div className="container">
           <div className="row">
             <div className="col l8 ">
-              <h5 className="white-text">Company Bio</h5>
+              <Link to="/" id="logo-container" className="brand-logo">
+                <img className="smaller" src={logo} alt="CraftiCards" />
+              </Link>
               <p className="grey-text text-lighten-4">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem asperiores iste natus, eos dignissimos vel porro quaerat dolor qui quam?
               </p>
@@ -26,7 +29,7 @@ export default class Footer extends Component {
         </div>
         <div className="footer-copyright">
           <div className="container">
-            © CraftiCards 2020
+            © 2020 CraftiCards
           </div>
         </div>
       </footer>

@@ -46,8 +46,8 @@ export default class Header extends Component {
       <header className="page-header">
         <nav className="blue-grey darken-3" role="navigation">
           <div className="nav-wrapper container">
-            <Link id="logo-container" to="/" className="brand-logo">
-              <img className="logo" src={logo} alt="CraftiCards" />
+            <Link to="/" id="logo-container" className="brand-logo">
+              <img className="logo hide-on-med-and-down" src={logo} alt="CraftiCards" />
             </Link>
             <ul className="right">
               {userLinks}

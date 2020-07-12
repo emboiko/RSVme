@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Logout from "./utils/Logout";
+import Loading from "./utils/Loading";
 import axios from 'axios';
 
 export default class Account extends Component {
@@ -64,7 +65,7 @@ export default class Account extends Component {
     if (!this.state.user) {
       return (
         <div className="container">
-          <h2>Loading...</h2>
+          <Loading />
         </div>
       );
     } else {

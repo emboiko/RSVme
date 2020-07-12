@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from "react-router-dom";
+import Loading from "../Loading";
 
 export default class PublicOnlyRoute extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ export default class PublicOnlyRoute extends Component {
     if (this.state.loading) {
       return (
         <div className="container">
-          <h1>Loading...</h1>
+          <Loading />
         </div>
       )
     } else {

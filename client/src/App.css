@@ -25,9 +25,27 @@
 }
 
 .row .input-field input:focus {
-    border-bottom: 1px solid #607d8b !important;
+    border-bottom: 1px solid #263238 !important;
 }
 
 .active-link {
     background-color: #263238;
+}
+
+.main-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.smaller {
+    width: 75px;
 }
