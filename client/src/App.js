@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from 'axios';
+import ProtectedRoute from "./components/utils/router/ProtectedRoute";
+import PublicOnlyRoute from "./components/utils/router/PublicOnlyRoute";
 import NotFound from "./components/NotFound";
 import Header from "./components/utils/Header";
 import Landing from "./components/Landing";
@@ -20,14 +22,15 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount = async () => await this.getUser();
+  componentDidMount = async () => {
+    this.setUser(await this.getUser());
+  }
 
   setUser = user => this.setState({ user });
 
   getUser = async () => {
     const res = await axios.get("/users/me");
     if (res.data._id) {
-      this.setUser(res.data);
       return res.data;
     }
   }
@@ -36,7 +39,6 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <Header user={this.state.user} />
-
         <Switch>
 
           <Route
@@ -45,33 +47,38 @@ export default class App extends Component {
             render={routeProps => <Landing {...routeProps} user={this.state.user} />}
           />
 
-          <Route
-            exact
-            path="/account"
-            render={routeProps => <Account {...routeProps} getUser={this.getUser} />}
-          />
-
-          <Route
-            exact
-            path="/account/delete"
-            render={routeProps => <AccountDelete {...routeProps} setUser={this.setUser} />}
-          />
-
-          <Route
+          <PublicOnlyRoute
             exact
             path="/register"
+            getUser={this.getUser}
             render={routeProps => <Register {...routeProps} setUser={this.setUser} />}
           />
 
-          <Route
+          <PublicOnlyRoute
             exact
             path="/login"
+            getUser={this.getUser}
             render={routeProps => <Login {...routeProps} setUser={this.setUser} />}
           />
 
-          <Route
+          <ProtectedRoute
+            exact
+            path="/account"
+            getUser={this.getUser}
+            render={routeProps => <Account {...routeProps} getUser={this.getUser} setUser={this.setUser} />}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/account/delete"
+            getUser={this.getUser}
+            render={routeProps => <AccountDelete {...routeProps} setUser={this.setUser} />}
+          />
+
+          <ProtectedRoute
             exact
             path="/dashboard"
+            getUser={this.getUser}
             render={routeProps => <Dashboard {...routeProps} />}
           />
 
@@ -80,7 +87,6 @@ export default class App extends Component {
           />
 
         </Switch>
-
       </BrowserRouter>
     );
   }

@@ -11,20 +11,13 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
-app.use(methodOverride("_method"));
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method")); //this might go
 app.use(rsvpRouter);
 app.use(userRouter);
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("client/build"));
-// } else {
-//   const path = require("path");
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 removeExpiredRSVPs();
 

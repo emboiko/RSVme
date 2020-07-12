@@ -1,42 +1,42 @@
 {
-    "name": "rsvme",
-    "version": "1.0.0",
-    "description": "RSVP",
-    "main": "index.js",
-    "dependencies": {
-        "@sendgrid/mail": "^7.1.1",
-        "bcryptjs": "^2.4.3",
-        "concurrently": "^5.2.0",
-        "cookie-parser": "^1.4.5",
-        "express": "^4.17.1",
-        "helmet": "^3.22.0",
-        "jsonwebtoken": "^8.5.1",
-        "method-override": "^3.0.0",
-        "mongoose": "^5.9.15",
-        "multer": "^1.4.2",
-        "qrcode": "^1.4.4",
-        "sharp": "^0.25.3",
-        "validator": "^13.0.0"
-    },
-    "devDependencies": {
-        "env-cmd": "^10.1.0",
-        "jest": "^26.0.1",
-        "supertest": "^4.0.2"
-    },
-    "scripts": {
-        "start": "node ./src/index.js",
-        "server": "env-cmd -f ./config/dev.env nodemon ./src/index.js",
-        "client": "npm run start --prefix client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
-        "test": "env-cmd -f ./config/test.env jest --watch --runInBand",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-    },
-    "jest": {
-        "testEnvironment": "node"
-    },
-    "keywords": [
-        "RSVP"
-    ],
-    "author": "Emboiko",
-    "license": "ISC"
+  "name": "rsvme",
+  "version": "1.0.0",
+  "description": "RSVP",
+  "main": "index.js",
+  "dependencies": {
+    "@sendgrid/mail": "^7.1.1",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^5.2.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.9.15",
+    "multer": "^1.4.2",
+    "qrcode": "^1.4.4",
+    "sharp": "^0.25.3",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
+  },
+  "scripts": {
+    "start": "node ./src/index.js",
+    "server": "env-cmd -f ./config/dev.env nodemon ./src/index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "RSVP"
+  ],
+  "author": "Emboiko",
+  "license": "ISC"
 }

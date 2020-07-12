@@ -3,14 +3,13 @@ const QRcode = require("qrcode");
 const mongoose = require("mongoose");
 const sharp = require("sharp");
 const auth = require("../middleware/auth");
-const checkUser = require("../middleware/checkUser");
 const upload = require("../middleware/multer");
 const RSVP = require("../models/RSVP");
 const { acceptEmail } = require("../email/email");
 
 const rsvpRouter = new express.Router();
 
-// rsvpRouter.get("/about", checkUser, (req, res) => {
+// rsvpRouter.get("/about", (req, res) => {
 //     res.status(200).render("about", { user: req.user, pageTitle: "RSVme | About" });
 // });
 
@@ -59,7 +58,7 @@ rsvpRouter.post("/rsvp", auth, upload.single("rsvp-img"), async (req, res) => {
   }
 });
 
-rsvpRouter.get("/rsvp/:id", checkUser, async (req, res) => {
+rsvpRouter.get("/rsvp/:id", async (req, res) => {
   const rsvp = await RSVP.findOne({ id: req.params.id });
   if (!rsvp) return res.status(404).render("notfound", {
     user: req.user,
@@ -88,7 +87,7 @@ rsvpRouter.get("/rsvp/:id/joined", auth, async (req, res) => {
   });
 });
 
-rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
+rsvpRouter.get("/rsvp/:id/qr", async (req, res) => {
   const rsvp = await RSVP.findOne({ id: req.params.id })
   if (!rsvp) return res.status(404).render("notfound", {
     user: req.user,
@@ -103,7 +102,7 @@ rsvpRouter.get("/rsvp/:id/qr", checkUser, async (req, res) => {
   });
 });
 
-rsvpRouter.get("/rsvp/:id/img", checkUser, async (req, res) => {
+rsvpRouter.get("/rsvp/:id/img", async (req, res) => {
   const rsvp = await RSVP.findOne({ id: req.params.id })
   if (!rsvp) return res.status(404).render("notfound", {
     user: req.user,
@@ -259,7 +258,7 @@ rsvpRouter.get("/rsvps", auth, async (req, res) => {
   }
 });
 
-rsvpRouter.post("/rsvp/:id", checkUser, async (req, res) => {
+rsvpRouter.post("/rsvp/:id", async (req, res) => {
   try {
     const rsvp = await RSVP.findOne({ id: req.params.id });
     if (!rsvp) return res.status(404).render("notfound", {

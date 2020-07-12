@@ -24,24 +24,26 @@ export default class Account extends Component {
     const user = await this.props.getUser();
     this.setState({ user });
     this.setState({
-      first_name: this.state.user.first_name,
-      last_name: this.state.user.last_name,
-      email: this.state.user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
       password: ""
     });
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.patch("/users/me", {
+    const user = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password,
-    });
+    }
+    const res = await axios.patch("/users/me", user);
 
     if (res.data._id) {
       this.setState({ message: "Updated Successfully" });
+      this.props.setUser(user);
       this.populate();
     }
 

@@ -2,7 +2,6 @@ const express = require("express");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 const noAuth = require("../middleware/noAuth");
-const checkUser = require("../middleware/checkUser");
 const upload = require("../middleware/multer");
 const sharp = require("sharp");
 const { welcomeEmail, cancelEmail } = require("../email/email");
@@ -32,9 +31,9 @@ userRouter.post("/users", noAuth, async (req, res) => {
     // welcomeEmail(user.email, user.first_name);
     const token = await user.generateAuthToken();
     res.cookie("access_token", token, { httpOnly: true });
-    res.send(user);
+    res.status(200).send(user);
   } catch (err) {
-    res.json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
