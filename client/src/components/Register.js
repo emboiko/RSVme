@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       first_name: "",
       last_name: "",
       email: "",
       password: "",
       message: ""
-    }
+    };
   }
+
+  componentDidMount = () => document.title = "CraftiCards | Register";
 
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,17 +26,16 @@ export default class Register extends Component {
     });
 
     if (res.data._id) {
-      window.location.href = "/dashboard";
+      this.props.setUser(res.data);
+      this.props.history.push("/dashboard");
     } else {
+      // Todo
       this.setState({ message: "Email is already in use." });
     }
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
   render() {
     return (
       <div className="container">
@@ -114,6 +115,6 @@ export default class Register extends Component {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
+import Footer from "../components/utils/Footer";
 import Sample from "../components/utils/Sample";
-import logo from "../img/logo.png";
+import logoFull from "../img/logoFull.png";
+import logoName from "../img/logoName.png";
 import sample1 from "../img/sample1.jpg";
 import sample2 from "../img/sample2.jpg";
 import sample3 from "../img/sample3.jpg";
@@ -10,6 +12,8 @@ import mailbox from "../img/mailbox.png";
 import guestList from "../img/guest-list.png";
 
 export default class Landing extends Component {
+  componentDidMount = () => document.title = "CraftiCards";
+
   render() {
     let getStarted;
 
@@ -29,17 +33,21 @@ export default class Landing extends Component {
           <div className="container">
             <br /><br />
             <div className="header center hide-on-small-only">
-              <img src={logo} alt="Crafticards" />
+              <img src={logoFull} alt="Crafticards" />
             </div>
             <h1 className="header center hide-on-med-and-up">
-              CraftiCards
+              <img src={logoName} alt="Crafticards" />
             </h1>
 
             <div className="row center">
               <h5 className="header col s12 light">RSVPs and guest-list management for the modern era</h5>
             </div>
             <div className="row center">
-              <a href={getStarted} className="btn-large waves-effect waves-light light-blue darken-4">Get Started</a>
+              <Link
+                to={getStarted}
+                className="btn-large waves-effect waves-light blue-grey">
+                Get Started
+              </Link>
             </div>
             <br /><br />
           </div>

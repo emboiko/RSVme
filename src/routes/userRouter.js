@@ -56,88 +56,68 @@ userRouter.patch("/users/me", auth, async (req, res) => {
   ];
   const valid = updates.every((update) => allowedUpdates.includes(update));
 
-  if (!valid) return res.status(400).render("account", {
-    error: "Invalid updates",
-    user: req.user,
-    pageTitle: "RSVme",
-    message: "Invalid Updates"
+  if (!valid) return res.status(400).json({
+    error: "Invalid Updates"
   });
 
   try {
     updates.forEach((update) => req.user[update] = req.body[update]);
     await req.user.save();
-    res.status(202).render("account", {
-      user: req.user,
-      message: "Updated Successfully.",
-      pageTitle: `RSVme | ${req.user.name}`
-    });
+    res.status(202).send(req.user);
   } catch (err) {
-    const index = err.message.lastIndexOf(":");
-    const substr = err.message.substr(index + 1);
-    res.status(400).render("account", {
-      user: req.user,
-      error: substr,
-      pageTitle: `RSVme | ${req.user.name}`
+    res.status(500).json({
+      error: "Server Error"
     });
   }
 });
 
 userRouter.delete("/users/me", auth, async (req, res) => {
   await req.user.remove();
-  cancelEmail(req.user.email, req.user.first_name);
-  res.status(202).render("accountDeleteSuccess", {
-    user: req.user,
-    pageTitle: "RSVme",
-    url: process.env.URL
+  res.clearCookie("access_token");
+  // cancelEmail(req.user.email, req.user.first_name);
+  res.status(202).json({
+    message: "Account Deleted"
   });
 });
 
-userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
-  if (!req.file) return res.status(400).render("account", {
-    user: req.user,
-    error: "Please choose a file before uploading.",
-    pageTitle: `RSVme | ${req.user.first_name}`
-  });
+// userRouter.post("/users/me/avatar", auth, upload.single("avatar"), async (req, res) => {
+//   if (!req.file) return res.status(400).json({
+//     error: "Please choose a file before uploading."
+//   });
 
+//   const buffer = await sharp(req.file.buffer)
+//     .resize({ width: 250, height: 250 })
+//     .png()
+//     .toBuffer();
 
-  const buffer = await sharp(req.file.buffer)
-    .resize({ width: 250, height: 250 })
-    .png()
-    .toBuffer();
+//   req.user.avatar = buffer;
+//   await req.user.save();
+//   res.status(201).send();
 
-  req.user.avatar = buffer;
-  await req.user.save();
-  res.redirect("/users/me");
+// }, (err, req, res, next) => {
+//   res.status(500).json({
+//     error: err
+//   });
+// });
 
-}, (err, req, res, next) => {
-  const index = err.message.lastIndexOf(":");
-  let error = err.message.substr(index + 1);
+// //todo
+// userRouter.get("/users/:id/avatar", async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     if (!user || !user.avatar) throw new Error();
 
-  res.status(400).render("account", {
-    user: req.user,
-    error,
-    pageTitle: `RSVme | ${req.user.first_name}`
-  });
-});
+//     res.set("Content-Type", "image/png");
+//     res.status(200).send(user.avatar);
+//   } catch (err) {
+//     res.status(404).send();
+//   }
+// });
 
-//todo
-userRouter.get("/users/:id/avatar", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user || !user.avatar) throw new Error();
-
-    res.set("Content-Type", "image/png");
-    res.status(200).send(user.avatar);
-  } catch (err) {
-    res.status(404).send();
-  }
-});
-
-//todo
-userRouter.delete("/users/me/avatar", auth, async (req, res) => {
-  req.user.avatar = undefined;
-  await req.user.save();
-  res.status(200).send();
-});
+// //todo
+// userRouter.delete("/users/me/avatar", auth, async (req, res) => {
+//   req.user.avatar = undefined;
+//   await req.user.save();
+//   res.status(200).send();
+// });
 
 module.exports = userRouter;

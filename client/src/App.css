@@ -2,6 +2,11 @@
     width: 75px;
 }
 
+.logo {
+    height: 70px;
+    padding: 10px;
+}
+
 .err {
     color: red;
 }
@@ -20,5 +25,9 @@
 }
 
 .row .input-field input:focus {
-    border-bottom: 1px solid #03a9f4 !important;
+    border-bottom: 1px solid #607d8b !important;
+}
+
+.active-link {
+    background-color: #263238;
 }

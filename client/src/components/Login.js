@@ -3,32 +3,35 @@ import { Link, } from "react-router-dom";
 import axios from "axios";
 
 export default class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: "",
       password: "",
       message: ""
-    }
+    };
   }
+
+  componentDidMount = () => document.title = "CraftiCards | Login";
 
   handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/users/login", { email: this.state.email, password: this.state.password });
+      const res = await axios.post(
+        "/users/login",
+        { email: this.state.email, password: this.state.password }
+      );
+
       if (res.data._id) {
-        window.location.href = "/dashboard";
+        this.props.setUser(res.data);
+        this.props.history.push("/dashboard");
       }
     } catch (err) {
       this.setState({ message: "Unable to login. Check your credentials and try again." });
     }
   }
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
   render() {
     return (
@@ -77,6 +80,6 @@ export default class Login extends Component {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
