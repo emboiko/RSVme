@@ -1,5 +1,5 @@
 {
-  "name": "rsvme",
+  "name": "crafticards",
   "version": "1.0.0",
   "description": "RSVP",
   "main": "index.js",
@@ -34,7 +34,8 @@
     "testEnvironment": "node"
   },
   "keywords": [
-    "RSVP"
+    "RSVP",
+    "crafticards"
   ],
   "author": "Emboiko",
   "license": "ISC"
