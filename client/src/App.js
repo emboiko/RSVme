@@ -88,14 +88,14 @@ export default class App extends Component {
 
               <ProtectedRoute
                 exact
-                path="/new_rsvp"
+                path="/cc"
                 getUser={this.getUser}
                 render={routeProps => <CreateRSVP {...routeProps} />}
               />
 
               <Route
                 exact
-                path="/view_rsvp/:id"
+                path="/cc/:id"
                 render={routeProps => <ReadRSVP {...routeProps} />}
               />
 

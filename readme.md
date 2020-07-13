@@ -1,7 +1,5 @@
 # CraftiCards
 
-###### React Branch (WIP)
-
 https://www.crafticards.com/
 
 <div align="center">

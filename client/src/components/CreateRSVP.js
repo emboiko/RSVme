@@ -38,10 +38,10 @@ export default class CreateRSVP extends Component {
 
       const res = await axios.post("/rsvp", formData, config);
       if (res.status === 201) {
-        this.props.history.push(`/view_rsvp/${res.data.id}`);
+        this.props.history.push(`/cc/${res.data.id}`);
       } else {
-        let messages = Object.values(res.data);
-        let message = messages.map((message, i) => {
+        const messages = Object.values(res.data);
+        const message = messages.map((message, i) => {
           return <li key={i}>{message}</li>
         });
         this.setState({ message });

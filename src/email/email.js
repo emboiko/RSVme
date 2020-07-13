@@ -56,7 +56,7 @@ const welcomeEmail = (email, name) => {
 const cancelEmail = (email, name) => {
   sgMail.send({
     to: email,
-    from: "no_reply@RSVme.com",
+    from: "no_reply@crafticards.com",
     subject: `Sorry to see you go, ${name}`,
     text: "Your account and any CraftiCards you have created have been successfully deleted. We hope to see you back sometime soon."
   });

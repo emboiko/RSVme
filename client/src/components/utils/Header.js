@@ -34,7 +34,7 @@ export default class Header extends Component {
         <li>
           <NavLink
             activeClassName="active-link"
-            to="/login">Login</NavLink>
+            to="/login">Sign In</NavLink>
         </li>
       </>
     }
