@@ -46,8 +46,13 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-.smaller {
+.small {
+    height: 60px;
+}
+
+.logo-footer {
     width: 75px;
+    margin-top: 35px;
 }
 
 .account-avatar {
@@ -58,4 +63,20 @@ body {
 
 #hidden {
     display:none;
+}
+
+.fixed-width-btn {
+    width: 140px;
+}
+
+.email-trunc {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 993px) {
+    .email-trunc {
+        max-width: 100px;
+    }
 }

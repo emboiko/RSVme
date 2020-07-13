@@ -43,9 +43,9 @@ export default class Landing extends Component {
             <div className="row center">
               <Link
                 to={getStarted}
-                className="btn-large waves-effect waves-light blue-grey">
+                className="btn-large waves-effect waves-light blue-grey darken-3">
                 Get Started
-                </Link>
+              </Link>
             </div>
             <br /><br />
           </div>

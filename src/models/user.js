@@ -51,7 +51,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true
 });
 
-userSchema.methods.generateAuthToken = function () { //todo
+userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET);
 }
 

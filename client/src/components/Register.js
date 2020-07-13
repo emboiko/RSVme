@@ -51,7 +51,7 @@ export default class Register extends Component {
     return (
       <div className="container">
         <div className="row">
-          <form className="col s6 offset-s3" onSubmit={this.handleSubmit}>
+          <form className="col s10 offset-s1 m8 offset-m2 l6 offset-l3" onSubmit={this.handleSubmit}>
             <div className="center-align mtop">
               Have an account already?
               <br />

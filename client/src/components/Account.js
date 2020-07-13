@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Logout from "./utils/Logout";
 import Loading from "./utils/Loading";
 import axios from 'axios';
 import defaultUserAvatar from "../img/defaultUserIcon.png";
@@ -140,34 +139,37 @@ export default class Account extends Component {
         <div className="container">
           <div className="center-align">
             <h2>Account</h2>
-            <Logout />
             <p>{this.state.message}</p>
+
+            <img
+              src={this.state.avatar}
+              alt="Avatar"
+              className="account-avatar mbottom mtop"
+              onError={this.handleBrokenImage}
+            />
             <form
               encType="multipart/form-data"
               onSubmit={this.handleAvatarSubmit}
               onChange={this.handleChange}
             >
-              <img
-                src={this.state.avatar}
-                alt="Avatar"
-                className="account-avatar mbottom mtop"
-                onError={this.handleBrokenImage}
-              />
               <br />
               <input className="mtop mbottom" type="file" name="avatar" />
               <br />
-              <button className="btn mtop mbottom">Upload Avatar</button>
+              <button className="btn blue-grey darken-3 mtop mbottom fixed-width-btn">
+                Upload
+              </button>
             </form>
+
             <button
-              className="btn mtop mbottom red"
+              className="btn mtop mbottom red fixed-width-btn"
               id={this.state.avatarDeleteButtonID}
               onClick={this.deleteAvatar}
             >
               Delete Avatar
             </button>
+
           </div>
           <div className="row">
-
 
             <form className="col s10 offset-s1 m8 offset-m2 l6 offset-l3" onSubmit={this.handleSubmit}>
               <div className="row">
@@ -251,7 +253,7 @@ export default class Account extends Component {
               </div>
               <div className="row center-align">
                 <button
-                  className="btn blue-grey waves-effect waves-light"
+                  className="btn blue-grey darken-3 waves-effect waves-light"
                 >
                   Update
               </button>

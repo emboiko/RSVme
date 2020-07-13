@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom";
-import Logout from "./Logout";
 import logo from "../../img/logo.png";
 
 export default class Header extends Component {
@@ -19,12 +18,10 @@ export default class Header extends Component {
         <li className="mright">
           <NavLink
             activeClassName="active-link"
+            className="email-trunc"
             to="/account">
-            {this.props.user.first_name}
+            {this.props.user.email}
           </NavLink>
-        </li>
-        <li className="hide-on-med-and-down">
-          <Logout />
         </li>
       </>
     } else {
@@ -48,6 +45,9 @@ export default class Header extends Component {
           <div className="nav-wrapper container">
             <Link to="/" id="logo-container" className="brand-logo">
               <img className="logo hide-on-small-only" src={logo} alt="CraftiCards" />
+            </Link>
+            <Link to="/">
+              <img className="logo small hide-on-med-and-up" src={logo} alt="CraftiCards" />
             </Link>
             <ul className="right">
               {userLinks}
