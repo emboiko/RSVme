@@ -93,6 +93,20 @@ label {
     text-align: center;
 }
 
+.dboard-card {
+    width: 200px;
+    margin: 0 auto;
+}
+
+.dboard-qr {
+    width: 200px;
+    margin: 0 auto;
+}
+
+.activator {
+    cursor: pointer;
+}
+
 .input-field input:focus + label, .materialize-textarea:focus:not([readonly]) + label {
     color: #263238 !important;
 }
@@ -100,10 +114,4 @@ label {
 .input-field input:focus, .materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #263238 !important;
     box-shadow: 0 1px 0 0 #263238 !important;
-}
-
-@media only screen and (max-width: 993px) {
-    .email-trunc {
-        max-width: 100px;
-    }
 }

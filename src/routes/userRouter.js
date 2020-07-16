@@ -33,7 +33,6 @@ userRouter.post("/users", noAuth, async (req, res) => {
     res.cookie("access_token", token, { httpOnly: true });
     res.status(200).send(user);
   } catch (err) {
-    console.log(err)
     res.status(500).json({ message: err.message });
   }
 });

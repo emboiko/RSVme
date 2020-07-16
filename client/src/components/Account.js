@@ -18,6 +18,14 @@ export default class Account extends Component {
       password: "",
       phone: ""
     };
+    this.initialState = {};
+  }
+
+  componentWillUnmount = () => {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
   }
 
   componentDidMount = async () => {

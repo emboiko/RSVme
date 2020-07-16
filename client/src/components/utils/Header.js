@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from "react-router-dom";
+import M from "materialize-css";
 import logo from "../../img/logo.png";
 
 export default class Header extends Component {
+  componentDidMount = () => {
+    const elems = document.querySelectorAll('.sidenav');
+    M.Sidenav.init(elems);
+  }
+
   render = () => {
     let userLinks;
 
     if (this.props.user) {
       userLinks = <>
-        <li className="mright">
+        <li>
           <NavLink
             activeClassName="active-link"
             to="/dashboard">
             Dashboard
           </NavLink>
         </li>
-        <li className="mright">
+        <li>
           <NavLink
             activeClassName="active-link"
             className="email-trunc"
@@ -50,7 +56,13 @@ export default class Header extends Component {
               <img className="logo small hide-on-med-and-up" src={logo} alt="CraftiCards" />
             </Link>
             <ul className="right">
-              {userLinks}
+              <div className="hide-on-med-and-down">
+                {userLinks}
+              </div>
+              <Link to="#" data-target="mobile-links" className="sidenav-trigger"><i className="material-icons">menu</i></Link>
+              <ul className="sidenav" id="mobile-links">
+                {userLinks}
+              </ul>
             </ul>
           </div>
         </nav>

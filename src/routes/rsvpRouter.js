@@ -11,7 +11,7 @@ const rsvpRouter = new express.Router();
 
 rsvpRouter.post("/rsvp", auth, upload.single("img"), async (req, res) => {
   const id = new mongoose.Types.ObjectId();
-  const qr = await QRcode.toDataURL(`${process.env.URL}/rsvp/${id}`);
+  const qr = await QRcode.toDataURL(`${process.env.URL}/cc/${id}`);
 
   let buffer;
   if (req.file) {
@@ -58,7 +58,7 @@ rsvpRouter.get("/rsvp/:id", async (req, res) => {
 rsvpRouter.get("/rsvp/:id/qr", async (req, res) => {
   const rsvp = await RSVP.findOne({ id: req.params.id })
   if (!rsvp) return res.status(404).json({ message: "Not Found" });
-  res.status(200).json({ qr: rsvp.qr });
+  res.status(200).send(rsvp.qr);
 });
 
 rsvpRouter.get("/rsvp/:id/img", async (req, res) => {
@@ -205,7 +205,6 @@ rsvpRouter.post("/rsvp/:id", async (req, res) => {
     await rsvp.save();
     res.status(201).json({ message: "Submitted" });
   } catch (err) {
-    console.log(err);
     res.status(500).send("Server Error");
   }
 });
