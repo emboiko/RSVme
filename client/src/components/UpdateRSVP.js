@@ -121,8 +121,8 @@ export default class UpdateRSVP extends Component {
         <div className="container">
           <div className="row">
             <div className="center">
-              <h2>Edit RSVP</h2>
-              <ul className="error">
+              <h2>Edit</h2>
+              <ul className="err">
                 {this.state.message}
               </ul>
 

@@ -78,7 +78,7 @@ export default class ReplyRSVP extends Component {
       return (
         <div className="row">
           <div className="col s10 offset-s1 m8 offset-m2 l6 offset-l3">
-            <p className="error bold">
+            <p className="err bold">
               {this.state.message}
             </p>
             <form onSubmit={this.handleSubmit}>

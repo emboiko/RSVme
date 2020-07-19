@@ -91,7 +91,7 @@ export default class ReadRSVP extends Component {
         })}
       </p>
 
-      const timeDisplay = <p >
+      const timeDisplay = <p>
         {
           new Date('1970-01-01T' + this.state.time + 'Z')
             .toLocaleTimeString({}, options)
@@ -117,11 +117,8 @@ export default class ReadRSVP extends Component {
         })}
       </small>
 
-
       return (
         <div className="container center">
-
-
           <div className="row">
             <div className="col s10 offset-s1 m8 offset-m2 l6 offset-l3">
               <div className="card-panel blue-grey darken-3 white-text">
@@ -160,7 +157,6 @@ export default class ReadRSVP extends Component {
 
                       {rsvpByDisplay}
                     </div>
-
                   </div>
                 </li>
                 <li>
@@ -171,7 +167,6 @@ export default class ReadRSVP extends Component {
                       |&nbsp;
                       {this.state.numGuests} total guests.
                     </h5>
-
                     <div className="row">
                       <div className="col s12">
                         <PublicGuestList joined={this.state.joined} />
@@ -182,7 +177,6 @@ export default class ReadRSVP extends Component {
               </ul>
             </div>
           </div>
-
 
           <ReplyRSVP
             id={this.state.id}

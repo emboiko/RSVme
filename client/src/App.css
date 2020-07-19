@@ -8,18 +8,21 @@
 }
 
 .err {
-    color: red;
+    color: #c62828;
 }
 
 .mtop {
     margin-top: 10px;
 }
+
 .mbottom {
     margin-bottom: 10px;
 }
+
 .mright {
     margin-right: 10px;
 }
+
 .mleft {
     margin-left: 10px;
 }
@@ -59,10 +62,6 @@ label {
     font-weight: bold;
 }
 
-.error {
-    color: #c62828;
-}
-
 .logo-footer {
     width: 75px;
     margin-top: 35px;
@@ -75,11 +74,7 @@ label {
 }
 
 #hidden {
-    display:none;
-}
-
-.fixed-width-btn {
-    width: 140px;
+    display: none;
 }
 
 .email-trunc {
@@ -89,7 +84,8 @@ label {
 }
 
 .description {
-    height: 200px;
+    min-height: 100px;
+    height: 100px;
     resize: vertical;
 }
 
@@ -102,7 +98,7 @@ label {
 }
 
 .rsvp-img {
-    max-width: 250px !important;
+    max-width: 300px !important;
 }
 
 .dboard-qr {
@@ -140,7 +136,7 @@ label {
     box-shadow: #313131 5px 5px 5px 5px;
 }
 
-.input-field input:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+.input-field input:focus+label, .materialize-textarea:focus:not([readonly])+label {
     color: #263238 !important;
 }
 
@@ -165,9 +161,24 @@ label {
     vertical-align: bottom;
 }
 
+@media only screen and (max-width: 992px) {
+    .active-link {
+        color: white !important;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .card-img {
         width: 150px !important;
         height: 150px !important;
+    }
+    .rsvp-img {
+        width: 200px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .modal-content i, span {
+        display: none;
     }
 }

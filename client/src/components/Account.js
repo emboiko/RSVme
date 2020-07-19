@@ -147,9 +147,7 @@ export default class Account extends Component {
       return (
         <div className="container">
           <div className="center-align">
-            <h2>Account</h2>
-            <p>{this.state.message}</p>
-
+            <br />
             <img
               src={this.state.avatar}
               alt="Avatar"
@@ -161,26 +159,39 @@ export default class Account extends Component {
               onSubmit={this.handleAvatarSubmit}
               onChange={this.handleChange}
             >
-              <br />
-              <input
-                className="mtop mbottom"
-                accept=".jpeg,.jpg,.png"
-                type="file"
-                name="avatar" />
-              <br />
-              <button className="btn blue-grey darken-3 mtop mbottom fixed-width-btn">
+
+              <div className="row">
+                <div className="file-field input-field col s6 offset-s3">
+                  <div className="btn">
+                    <span>File</span>
+                    <input
+                      type="file"
+                      accept=".jpeg,.jpg,.png"
+                      name="avatar"
+                    />
+                  </div>
+                  <div className="file-path-wrapper">
+                    <input className="file-path validate" type="text" />
+                  </div>
+                </div>
+              </div>
+              <button className="btn blue-grey darken-3 mbottom">
                 Upload
                 <i className="material-icons right">file_upload</i>
               </button>
+
             </form>
 
             <button
-              className="btn mtop mbottom red fixed-width-btn"
+              className="btn mtop mbottom red"
               id={this.state.avatarDeleteButtonID}
               onClick={this.deleteAvatar}
             >
               Delete Avatar
+              <i className="material-icons right">delete</i>
             </button>
+
+            <p>{this.state.message}</p>
 
           </div>
           <div className="row">

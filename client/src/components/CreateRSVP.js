@@ -83,11 +83,10 @@ export default class CreateRSVP extends Component {
       <div className="container">
         <div className="row">
           <div className="center">
-            <h2 >New RSVP</h2>
-            <ul className="error">
+            <h2>New RSVP</h2>
+            <ul className="err">
               {this.state.message}
             </ul>
-
           </div>
 
           <form
@@ -165,7 +164,7 @@ export default class CreateRSVP extends Component {
             </div>
 
             <div className="center">
-              <p>Include an image (jpg/png)</p>
+              <p><i className="material-icons">attach_file</i> Include an image (jpg/png)</p>
               <p>Max file size 1MB | Format .PNG or .JPG</p>
               <input
                 type="file"

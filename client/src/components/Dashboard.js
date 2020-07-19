@@ -61,6 +61,14 @@ export default class Dashboard extends Component {
                   className="waves-effect waves-light blue-grey darken-3 btn card-btn mbottom"
                   to={`/cc/${rsvp.id}`}
                 >
+                  Card
+                  <i className="material-icons right">card_giftcard</i>
+                </Link>
+                <br />
+                <Link
+                  className="waves-effect waves-light blue-grey darken-3 btn card-btn mbottom"
+                  to={`/cc/${rsvp.id}`}
+                >
                   View
                   <i className="material-icons right">visibility</i>
                 </Link>
@@ -81,11 +89,11 @@ export default class Dashboard extends Component {
 
                 <br />
                 <button
-                  className="waves-effect waves-light blue-grey darken-3 btn btn-large modal-trigger"
+                  className="waves-effect waves-light blue-grey darken-3 btn modal-trigger"
                   data-target={`modal${i}`}
                 >
                   <i className="material-icons right">people</i>
-                  Guest-List
+                  Guests &nbsp;
                 </button>
 
               </div>
@@ -95,9 +103,12 @@ export default class Dashboard extends Component {
               <span className="card-title grey-text text-darken-4"><i className="material-icons right">close</i></span>
               <br />
               <h5 className="center">{rsvp.title}</h5>
+              <hr />
               <div className="dboard-qr">
                 <img className="qr" src={rsvp.qr} alt="Crafticards QR-code" />
-                <p className="center">
+                <p className="center bold">
+                  Pin:
+                  <br />
                   {rsvp.pin}
                 </p>
               </div>

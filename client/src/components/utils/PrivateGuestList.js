@@ -8,15 +8,15 @@ export default class PrivateGuestList extends Component {
           <p>
             <i className="material-icons">person</i>
             &emsp;
-            Name: {party.party}
+            <span>Name: </span>{party.party}
             <br />
             <i className="material-icons">email</i>
             &emsp;
-            Contact: <a href={`mailto:${party.email}`}>{party.email}</a>
+            <span>Contact: </span><a href={`mailto:${party.email}`}>{party.email}</a>
             <br />
             <i className="material-icons">people</i>
             &emsp;
-            Party Size: {party.partySize}
+            <span>Party Size: {party.partySize}</span>
           </p>
         </li>
       );
@@ -26,10 +26,10 @@ export default class PrivateGuestList extends Component {
         <li className="collection-item" key={i}>
           <p>
             <i className="material-icons">person</i>
-            Name: {party.party}
+            <span>Name:</span> {party.party}
             <br />
             <i className="material-icons">email</i>
-            Contact: <a href={`mailto:${party.email}`}>{party.email}</a>
+            <span>Contact:</span> <a href={`mailto:${party.email}`}>{party.email}</a>
           </p>
         </li>
       );

@@ -4,10 +4,7 @@ import M from "materialize-css";
 import logo from "../../img/logo.png";
 
 export default class Header extends Component {
-  componentDidMount = () => {
-    const elems = document.querySelectorAll('.sidenav');
-    M.Sidenav.init(elems);
-  }
+  componentDidMount = () => M.Sidenav.init(document.querySelectorAll('.sidenav'));
 
   render = () => {
     let userLinks;
@@ -17,6 +14,7 @@ export default class Header extends Component {
         <li>
           <NavLink
             activeClassName="active-link"
+            className="sidenav-close"
             to="/dashboard">
             Dashboard
           </NavLink>
@@ -24,7 +22,7 @@ export default class Header extends Component {
         <li>
           <NavLink
             activeClassName="active-link"
-            className="email-trunc"
+            className="email-trunc sidenav-close"
             to="/account">
             {this.props.user.email}
           </NavLink>
@@ -35,11 +33,13 @@ export default class Header extends Component {
         <li>
           <NavLink
             activeClassName="active-link"
+            className="sidenav-close"
             to="/register">Register</NavLink>
         </li>
         <li>
           <NavLink
             activeClassName="active-link"
+            className="sidenav-close"
             to="/login">Sign In</NavLink>
         </li>
       </>

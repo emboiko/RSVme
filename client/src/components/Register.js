@@ -62,7 +62,7 @@ export default class Register extends Component {
               <p className="err">{this.state.message}</p>
             </div>
             <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <label htmlFor="firstName">*First Name</label>
                 <br />
                 <input
@@ -77,9 +77,7 @@ export default class Register extends Component {
                   value={this.state.firstName}
                 />
               </div>
-            </div>
-            <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <label htmlFor="lastName">*Last Name</label>
                 <br />
                 <input
