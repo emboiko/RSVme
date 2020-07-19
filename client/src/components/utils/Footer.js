@@ -19,7 +19,16 @@ export default class Footer extends Component {
                 <li><Link className="white-text show-on-small" to="/">Home</Link></li>
                 <li><Link className="white-text" to="/about">About</Link></li>
                 <li><Link className="white-text" to="/contact">Contact</Link></li>
-                <li><Link className="white-text" to="/contribute">Contribute</Link></li>
+                <li>
+                  <a
+                    className="white-text"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/emboiko/CraftiCards"
+                  >
+                    Contribute
+                </a>
+                </li>
                 <li><Link className="white-text" to="/tos">Terms of Use</Link></li>
               </ul>
               {this.props.user ? <Logout /> : ""}

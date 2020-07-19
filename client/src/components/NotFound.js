@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import notFound from "../img/notFound.png"
 
 export default class NotFound extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = { timeout: null }
+  }
+
+  componentDidMount = () => {
     document.title = "CraftiCards | Not Found";
     window.scrollTo(0, 0);
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       this.props.history.push("/");
-    }, 4000);
+    }, 5000);
+    this.setState({ timeout });
   }
+
+  componentWillUnmount = () => clearTimeout(this.state.timeout);
 
   render() {
     return (
