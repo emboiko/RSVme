@@ -108,11 +108,13 @@ export default class ReadRSVP extends Component {
 
       const rsvpBy = new Date(this.state.rsvpBy);
       const rsvpByDisplay = <small>RSVP by:<br />
-        {rsvpBy.getUTCMonth() + 1}
-        /
-        {rsvpBy.getUTCDate()}
-        /
-        {rsvpBy.getUTCFullYear()}
+        {rsvpBy.toLocaleDateString("en-US", {
+          timeZone: "UTC",
+          day: "numeric",
+          weekday: "long",
+          month: "long",
+          year: "numeric"
+        })}
       </small>
 
 

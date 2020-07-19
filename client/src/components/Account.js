@@ -170,6 +170,7 @@ export default class Account extends Component {
               <br />
               <button className="btn blue-grey darken-3 mtop mbottom fixed-width-btn">
                 Upload
+                <i className="material-icons right">file_upload</i>
               </button>
             </form>
 
@@ -269,13 +270,15 @@ export default class Account extends Component {
                   className="btn blue-grey darken-3 waves-effect waves-light"
                 >
                   Update
-              </button>
+                  <i className="material-icons right">sync</i>
+                </button>
               </div>
             </form>
           </div>
           <div className="center-align">
             <button className="btn red mbottom" onClick={this.deleteAccount}>
               Delete Account
+              <i className="material-icons right">delete</i>
             </button>
           </div>
         </div>

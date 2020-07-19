@@ -51,6 +51,10 @@ label {
     height: 60px;
 }
 
+.inline {
+    display: inline;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -154,6 +158,11 @@ label {
 
 .indicators li.active {
     background-color: red !important;
+}
+
+.material-icons {
+    display: inline-flex;
+    vertical-align: bottom;
 }
 
 @media only screen and (max-width: 600px) {

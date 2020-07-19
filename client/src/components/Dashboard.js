@@ -82,7 +82,7 @@ export default class Dashboard extends Component {
                 <br />
                 <button
                   className="waves-effect waves-light blue-grey darken-3 btn btn-large modal-trigger"
-                  data-target="modal1"
+                  data-target={`modal${i}`}
                 >
                   <i className="material-icons right">people</i>
                   Guest-List
@@ -103,7 +103,10 @@ export default class Dashboard extends Component {
               </div>
             </div>
 
-            <div id="modal1" className="modal">
+            <div id={`modal${i}`} className="modal">
+              <div className="modal-close">
+                <i className="material-icons">close</i>
+              </div>
               <div className="modal-content">
                 <PrivateGuestList rsvp={rsvp} />
               </div>
