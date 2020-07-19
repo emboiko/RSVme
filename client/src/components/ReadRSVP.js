@@ -82,11 +82,13 @@ export default class ReadRSVP extends Component {
 
       const date = new Date(this.state.date);
       const dateDisplay = <p>
-        {date.getUTCMonth() + 1}
-        /
-        {date.getUTCDate()}
-        /
-        {date.getUTCFullYear()}
+        {date.toLocaleDateString("en-US", {
+          timeZone: "UTC",
+          day: "numeric",
+          weekday: "long",
+          month: "long",
+          year: "numeric"
+        })}
       </p>
 
       const timeDisplay = <p >
@@ -120,50 +122,53 @@ export default class ReadRSVP extends Component {
 
           <div className="row">
             <div className="col s10 offset-s1 m8 offset-m2 l6 offset-l3">
-              <h4>
-                {this.state.title}
-              </h4>
-              <img className="responsive-img mbottom rsvp-img" onError={this.handleBrokenImage} src={this.state.img} alt="rsvp" />
+              <div className="card-panel blue-grey darken-3 white-text">
+                <h4>
+                  {this.state.title}
+                </h4>
+              </div>
+              <img className="mbottom rsvp-img" onError={this.handleBrokenImage} src={this.state.img} alt="rsvp" />
               <ul className="collapsible popout mtop">
-                <li>
-                  <div className="collapsible-header"><i className="material-icons">description</i>Description</div>
+                <li className="active">
+                  <div className="collapsible-header blue-grey darken-3 white-text"><i className="material-icons">description</i>Description / Contact</div>
                   <div className="collapsible-body">
                     <p className="rsvp-desc">
                       {this.state.description}
                     </p>
-                    <p>
+                    {this.state.description ? <hr /> : ""}
+                    <p className="bold">
                       {this.state.author}
-                    </p>
-                    <p>
+                      <br />
                       {this.state.authorEmail}
-                    </p>
-                    <p>
+                      <br />
                       {this.state.authorPhone}
                     </p>
                   </div>
                 </li>
                 <li>
-                  <div className="collapsible-header"><i className="material-icons">place</i>When / Where</div>
+                  <div className="collapsible-header blue-grey darken-3 white-text"><i className="material-icons">place</i>Where / When</div>
                   <div className="collapsible-body">
-                    <p >
-                      {this.state.location}
-                    </p>
+                    <div className="bold">
+                      <p>
+                        {this.state.location}
+                      </p>
+                      {dateDisplay}
 
-                    {dateDisplay}
+                      {timeDisplay}
 
-                    {timeDisplay}
+                      {rsvpByDisplay}
+                    </div>
 
-                    {rsvpByDisplay}
                   </div>
                 </li>
                 <li>
-                  <div className="collapsible-header"><i className="material-icons">people_outline</i>Guests</div>
+                  <div className="collapsible-header blue-grey darken-3 white-text"><i className="material-icons">people_outline</i>Guests</div>
                   <div className="collapsible-body">
-                    <p>
+                    <h5>
                       {this.state.joined.length} parties registered
                       |&nbsp;
-                  {this.state.numGuests} total guests.
-                </p>
+                      {this.state.numGuests} total guests.
+                    </h5>
 
                     <div className="row">
                       <div className="col s12">

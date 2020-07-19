@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Loading from "./utils/Loading";
+import PrivateGuestList from "./utils/PrivateGuestList";
 import defaultCardImg from "../img/favicon.png";
+import mail from "../img/mail.png";
+import M from "materialize-css";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -20,6 +23,7 @@ export default class Dashboard extends Component {
   componentDidMount = async () => {
     const req = await axios.get("/rsvps");
     if (req.status === 200) this.setState({ rsvps: req.data.rsvps, loading: false });
+    M.Modal.init(document.querySelectorAll('.modal'));
     document.title = "CraftiCards | Dashboard";
     window.scrollTo(0, 0);
   }
@@ -50,8 +54,9 @@ export default class Dashboard extends Component {
               <i className="material-icons activator right">more_vert</i>
               <br />
             </div>
-            <div className="card-action">
+            <div className="card-action brown lighten-5">
               <div className="center">
+
                 <Link
                   className="waves-effect waves-light blue-grey darken-3 btn card-btn mbottom"
                   to={`/cc/${rsvp.id}`}
@@ -73,8 +78,19 @@ export default class Dashboard extends Component {
                   <i className="material-icons right">delete</i>
                   Delete
                 </Link>
+
+                <br />
+                <button
+                  className="waves-effect waves-light blue-grey darken-3 btn btn-large modal-trigger"
+                  data-target="modal1"
+                >
+                  <i className="material-icons right">people</i>
+                  Guest-List
+                </button>
+
               </div>
             </div>
+
             <div className="card-reveal">
               <span className="card-title grey-text text-darken-4"><i className="material-icons right">close</i></span>
               <br />
@@ -86,6 +102,19 @@ export default class Dashboard extends Component {
                 </p>
               </div>
             </div>
+
+            <div id="modal1" className="modal">
+              <div className="modal-content">
+                <PrivateGuestList rsvp={rsvp} />
+              </div>
+              <div className="modal-footer">
+                <span
+                  className="modal-close waves-effect waves-green btn-flat">
+                  Close
+                </span>
+              </div>
+            </div>
+
           </div>
         );
       });
@@ -93,12 +122,22 @@ export default class Dashboard extends Component {
       return (
         <div className="container">
           <div className="center">
-            <h2>Dashboard</h2>
-            <Link to="/cc" className="waves-effect waves-light blue-grey darken-3 btn mbottom"><i className="material-icons right">add_box</i>New RSVP</Link>
+            <Link to="/cc" className="mtop waves-effect waves-light blue-grey darken-3 btn mbottom"><i className="material-icons right">add_box</i>New RSVP</Link>
           </div>
           <div className="row">
-            <div className="col s8 offset-s2">
+            <div className="col s10 offset-s1 m8 offset-m2 l6 offset-l3">
               {rsvps}
+              {
+                !rsvps.length ?
+                  <div className="center">
+                    <h4>
+                      RSVPs you have created will appear on this page.
+                    </h4>
+                    <img className="responsive-img mtop" src={mail} alt="envelope" />
+                  </div>
+                  :
+                  ""
+              }
             </div>
           </div>
         </div>

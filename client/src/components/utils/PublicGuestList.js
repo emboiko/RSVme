@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class PublicGuestList extends Component {
   render() {
     const joined = this.props.joined.map((party, i) => {
-      return <li className="collection-item" key={i}>{party.party}</li>
+      return <li className="collection-item blue-grey darken-3 white-text" key={i}>{party.party}</li>
     });
 
     return (
